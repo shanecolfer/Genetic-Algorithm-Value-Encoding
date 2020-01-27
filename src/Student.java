@@ -3,18 +3,22 @@ public class Student {
 
 	private String studentName;		//Stores the student name
 	private String studentID;		//Stores the student ID
+	private String supervisorName;	//Stores the student's supervisor's name
 	private String supervisorID;	//Stores the student's supervisor ID
 	
 	
 	//Constructor
-	public Student (String studentName, String studentID, String supervisorID)
+	public Student (String studentName, String supervisorName)
 	{
 		this.studentName = studentName;
-		this.studentID = studentID;
-		this.supervisorID = supervisorID;
+		this.supervisorName = supervisorName;
 	}
 	
-	
+	public Student (String studentName)
+	{
+		this.studentName = studentName;
+	}
+
 	//Getters and setters
 	public String getStudentID() {
 		return studentID;
@@ -25,7 +29,7 @@ public class Student {
 	}
 
 	public String getSupervisorID() {
-		return supervisorID;
+		return supervisorName;
 	}
 
 	public void setSupervisorID(String supervisorID) {
@@ -39,6 +43,22 @@ public class Student {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
+
+	public String getSupervisorName() {
+		return supervisorName;
+	}
+
+	public void setSupervisorName(String supervisorName) {
+		this.supervisorName = supervisorName;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [studentName=" + studentName + ", studentID=" + studentID + ", supervisorName=" + supervisorName
+				+ ", supervisorID=" + supervisorID + "]";
+	}
+	
+	
 
 	
 }

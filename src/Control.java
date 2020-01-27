@@ -1,20 +1,39 @@
 import java.awt.List;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Control {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
 		int i = 0; //Counter
 		int j; //Counter
-		int numEntities = 11; //Number of entities (8 students, 3 staff)
+		int numEntities = 13; //Number of entities (8 students, 3 staff)
 		int idLength = 4;    //Length of ID (bitstring)
 		String temp = "";
+		String[] timetable;
 		
-		//String[] entityIDs = new String[numEntities];			//Hold id's of students in the form of bit strings
+		//ArrayList to hold student names
+		ArrayList<Student> students = new ArrayList<>();
+		
+		//ArrayList to hold staff names
+		ArrayList<Staff> staff = new ArrayList<>();
+		
+		ReadExcelFile r1 = new ReadExcelFile();
+		
+		//Returns ArrayList of students
+		students = r1.readStudents();
+		
+		//Returns ArrayList of staff();
+		staff = r1.readStaff();
+		
+		
+		////////////////////////////////////////////////////////////////////////////
+		
+		//Hold id's of entities in the form of bit strings
 		ArrayList<String> entityIDs = new ArrayList<String>();
 		
 		//Generate random bit strings for entities
@@ -40,7 +59,51 @@ public class Control {
 		}
 		
 		System.out.println(entityIDs);
+				
+		/////////////////////////////////////////////////////////////////////////////
+				
 		
+		//Set student IDs
+		for(i = 0; i<students.size(); i++)
+		{
+			students.get(i).setStudentID(entityIDs.get(i));
+		}
+		
+		//Set staff IDs
+		for(j=0;j<staff.size(); i++)
+		{
+			staff.get(j).setStaffID(entityIDs.get(i));
+			j++;
+		}
+		
+		
+		///////////////////////////////////////////////////////////////////////////
+		
+		//Loop through students, matching their supervisor names with supervisor IDs and assigning them
+		
+		for(i=0; i<students.size(); i++)
+		{
+			for(j=0; j<staff.size(); j++)
+			{
+				if(students.get(i).getSupervisorName().equals(staff.get(j).getStaffName()))
+				{
+					students.get(i).setSupervisorID(staff.get(j).getStaffID());
+				}
+			}
+		}
+		
+		////////////////////////////////////////////////////////////////////////////
+		
+		//Printing
+		System.out.println(students);
+		System.out.println(staff);
+		
+		///////////////////////////////////////////////////////////////////////////
+		
+		public final int generateTimetable()
+		{
+			
+		}
 	}
 
 }
