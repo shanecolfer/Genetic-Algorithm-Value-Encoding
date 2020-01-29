@@ -14,7 +14,7 @@ public class Control {
 		int numEntities = 13; //Number of entities (8 students, 3 staff)
 		int idLength = 4;    //Length of ID (bitstring)
 		String temp = "";
-		String[] timetable;
+		String[][] timetable;
 		
 		//ArrayList to hold student names
 		ArrayList<Student> students = new ArrayList<>();
@@ -100,10 +100,8 @@ public class Control {
 		
 		///////////////////////////////////////////////////////////////////////////
 		
-		public final int generateTimetable()
-		{
-			
-		}
+		Timetable t1 = new Timetable();
+		t1.generateTimetable(entityIDs);
 	}
 
 }
