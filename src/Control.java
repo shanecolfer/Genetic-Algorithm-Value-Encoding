@@ -2,6 +2,7 @@ import java.awt.List;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Control {
@@ -15,6 +16,9 @@ public class Control {
 		int idLength = 4;    //Length of ID (bitstring)
 		String temp = "";
 		String[][] timetable;
+		String[][] translatedTimetable;
+		
+		double fitness = 0;
 		
 		//ArrayList to hold student names
 		ArrayList<Student> students = new ArrayList<>();
@@ -101,7 +105,21 @@ public class Control {
 		///////////////////////////////////////////////////////////////////////////
 		
 		Timetable t1 = new Timetable();
-		t1.generateTimetable(entityIDs);
+		timetable = t1.generateTimetable(entityIDs);
+		
+		//////////////////////////////////////////////////////////////////////////
+		
+		//Make fitness object
+		GeneticOperations g1 = new GeneticOperations(students,staff,timetable);
+		
+		//Call fitness function :0 ///THIS DOESN't WORK FOR BREAKS, TAKE OUT BREAKS
+		fitness = g1.fitnessGrading();
+		System.out.println("Fitness of timetable: " + fitness);
+		
+		//Translate timetable
+		translatedTimetable = t1.translateTimetable(timetable,students,staff);
+		
+		System.out.println(Arrays.deepToString(translatedTimetable));
 	}
 
 }

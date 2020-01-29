@@ -47,4 +47,37 @@ public class Timetable {
 		
 	}
 	
+	public String[][] translateTimetable(String[][] timetable, ArrayList<Student> students, ArrayList<Staff> staff) 
+	{
+
+		int rows = 18;
+		int columns = 4;
+		
+		String[][] translatedTimetable = new String[rows][columns];
+		
+		for(int i = 0; i < rows; i++)
+		{
+			for(int j = 0; j < columns; j++)
+			{
+				for(Student student : students)
+				{
+					if(student.getStudentID().contentEquals(timetable[i][j]))
+					{
+						translatedTimetable[i][j] = student.getStudentName();
+					}
+				}
+				
+				for(Staff staff1 : staff)
+				{
+					if(staff1.getStaffID().contentEquals(timetable[i][j]))
+					{
+						translatedTimetable[i][j] = staff1.getStaffName();
+					}
+				}
+			}
+		}
+		
+		return translatedTimetable;
+	}
+	
 }

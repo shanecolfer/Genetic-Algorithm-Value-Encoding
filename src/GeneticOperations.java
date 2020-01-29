@@ -14,11 +14,7 @@ public class GeneticOperations {
 		ArrayList<String> studentsGone = new ArrayList<>();		//Store students who have gone before
 		ArrayList<String> monitorsGone = new ArrayList<>();		//Store monitors who have gone before
 		
-		int counter = 0;										//Counter
-		
-		Object currentEntity;									//Store the current entity
-		
-							
+		int counter = 0;										//Counter				
 		int columns = 4;			//MAKE THIS DYNAMIC
 		int rows = 18;				//MAKE THIS DYNAMIC
 		
@@ -42,10 +38,6 @@ public class GeneticOperations {
 							counter++;
 							//Entity is a student fitness incremented
 							fitness++;
-							//Add student to list of students who have already gone
-							studentsGone.add(student.getStudentID());
-							//Store the current entity as an object for further anaylsis 
-							currentEntity = student;
 							
 							//START SUPERVISOR CHECK
 							
@@ -56,13 +48,24 @@ public class GeneticOperations {
 							}
 							else //Else decrement fitness
 							{
-								fitness = fitness - 1;
+								fitness = fitness - 1.5;
 							}
 							
 							//END SUPERVISOR CHECK
 							
-							//START GONE ALREADY CHECL
-							//MOVE THE ADDITION OF STUDENT TO GONE LIST TO THE BOTTOM OF THIS CODE
+							//START GONE ALREADY CHECK
+							if(studentsGone.contains(student.getStudentID()))
+							{
+								fitness = fitness - 1.5;
+							}
+							else
+							{
+								//Add student to list of students who have already gone
+								studentsGone.add(student.getStudentID());
+								
+								fitness = fitness++;
+							}
+							//END GONE ALREADY CHECK
 							
 						}
 						
@@ -71,26 +74,146 @@ public class GeneticOperations {
 					//If loop is exited without a match, entity is not student so decrement fitness
 					if(counter == 0)	//Counter here should be either 0 or 1 (NO OTHER VALUE)
 					{
-						fitness = fitness - 1.5;
+						fitness = fitness - 3;
 					}
 					
+					//Reset counter
+					counter = 0;
+					//END POSITION CHECK	
+				}	//END STUDENT CHECK
+				
+				else if(j==1)			//If we're on the second column, SUPERVISOR CHECKS
+					
+				{
+					//START POSITION CHECK
+					for (Staff staff : staff) 
+					{
+						if(staff.getStaffID().contentEquals(timetable[i][j]))
+						{
+							counter++;
+							//Entity is in correct position (Staff member)
+							fitness++;
+							
+							//Duplicate entity check (Is supervisor also second reader?)
+							if(timetable[i][j+1] == staff.getStaffID())
+							{
+								fitness = fitness - 1.5;	//Second reader and supervisor are the same entity
+							}
+							else
+							{
+								fitness++;					//They are different entities
+							}
+							
+							//Duplicate entity check (Is supervisor also monitor?)
+							if(timetable[i][j+2] == staff.getStaffID())
+							{
+								fitness = fitness - 1.5;	//Second reader and supervisor are the same entity
+							}
+							else
+							{
+								fitness++;					//They are different entities
+							}
+							
+						}
+					}
+					
+					//If loop is exited without a match, entity is not a staff member so decrement fitness
+					if(counter == 0)	//Counter here should be either 0 or 1 (NO OTHER VALUE)
+					{
+						fitness = fitness - 3;
+					}
+					
+					//Reset counter
+					counter = 0;
 					//END POSITION CHECK
+				}	//END SUPERVISOR CHECK
+				
+				else if(j==2)		//If we're on the third column, SECOND READER CHECKS
+				
+				{
+					//START POSITION CHECK
+					for (Staff staff : staff) 
+					{
+						if(staff.getStaffID().contentEquals(timetable[i][j]))
+						{
+							counter++;
+							//Entity is in correct position (Staff member)
+							fitness++;
+							
+							//Duplicate entity check is second reader also monitor?
+							if(timetable[i][j+1] == staff.getStaffID())
+							{
+								fitness = fitness - 1.5;	//Monitor and second reader are the same entity
+							}
+							else
+							{
+								fitness++;					//They are different entities
+							}
+							
+						}
+					}
+					//End
 					
+					//If loop is exited without a match, entity is not a staff member so decrement fitness
+					if(counter == 0)	//Counter here should be either 0 or 1 (NO OTHER VALUE)
+					{
+						fitness = fitness - 3;
+					}
 					
+					//Reset counter
+					counter = 0;
 					
+				//END POSITION CHECK
+				//END SUPERVISOR CHECK
 				}
 				
+				else if(j==3)		//If we're on the 4th column, MONITOR CHECKS
+					
+				{
+					//START POSITION CHECK
+					for (Staff staff : staff) 
+					{
+						if(staff.getStaffID().contentEquals(timetable[i][j]))
+						{
+							counter++;
+							//Entity is in correct position (Staff member)
+							fitness++;
+							
+							//START GONE ALREADY CHECK
+							if(monitorsGone.contains(staff.getStaffID()))
+							{
+								fitness++;		//In this case the more a monitor goes the better
+							}
+							else
+							{
+								//Add staff to list of staff who have already gone
+								monitorsGone.add(staff.getStaffID());
+								fitness = fitness - 1.5;
+							}
+							//END GONE ALREADY CHECK
+						}	
+						
+					}
+					
+					//If loop is exited without a match, entity is not a staff member so decrement fitness
+					if(counter == 0)	//Counter here should be either 0 or 1 (NO OTHER VALUE)
+					{
+						fitness = fitness - 3;
+					}
+					
+					//Reset counter
+					counter = 0;
+					
+				}
 			}
 		}
-		
 		return fitness;
-	}
-	
+}
 	
 	
 	
 	//Constructor
-	public GeneticOperations(ArrayList<Student> students, ArrayList<Staff> staff, int[][] timetable) {
+	public GeneticOperations(ArrayList<Student> students, ArrayList<Staff> staff, String[][] timetable) {
 		super();
 		this.students = students;
 		this.staff = staff;
@@ -115,11 +238,11 @@ public class GeneticOperations {
 		this.staff = staff;
 	}
 
-	public int[][] getTimetable() {
+	public String[][] getTimetable() {
 		return timetable;
 	}
 
-	public void setTimetable(int[][] timetable) {
+	public void setTimetable(String[][] timetable) {
 		this.timetable = timetable;
 	}
 }
