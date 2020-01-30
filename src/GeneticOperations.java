@@ -16,7 +16,7 @@ public class GeneticOperations {
 		
 		int counter = 0;										//Counter				
 		int columns = 4;			//MAKE THIS DYNAMIC
-		int rows = 18;				//MAKE THIS DYNAMIC
+		int rows = 1;				//MAKE THIS DYNAMIC
 		
 		
 		//Fitness Loop

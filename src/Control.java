@@ -18,6 +18,10 @@ public class Control {
 		String[][] timetable;
 		String[][] translatedTimetable;
 		
+		//Population & Generation variables
+		int populationSize = 50;
+		int generationSize = 100;
+		
 		double fitness = 0;
 		
 		//ArrayList to hold student names
@@ -26,6 +30,13 @@ public class Control {
 		//ArrayList to hold staff names
 		ArrayList<Staff> staff = new ArrayList<>();
 		
+		//ArrayList to hold population of timetables
+		ArrayList<String[][]> population = new ArrayList<>();
+		
+		//Array to hold fitnesses of candidates in population
+		double[] fitnessArray= new double[populationSize];
+		
+		//ReadExcelFile object
 		ReadExcelFile r1 = new ReadExcelFile();
 		
 		//Returns ArrayList of students
@@ -104,22 +115,43 @@ public class Control {
 		
 		///////////////////////////////////////////////////////////////////////////
 		
-		Timetable t1 = new Timetable();
-		timetable = t1.generateTimetable(entityIDs);
+		//Population Loop
+		for(i = 0; i < populationSize; i++)
+		{
+			//Generate random timetable
+			Timetable t1 = new Timetable();
+			timetable = t1.generateTimetable(entityIDs);
+			
+			//Add timetable to population
+			population.add(timetable);
+			
+			//Grade timetable
+			//Make fitness object
+			GeneticOperations g1 = new GeneticOperations(students,staff,timetable);
+			
+			//Call fitness function
+			fitness = g1.fitnessGrading();
+			
+			//Add fitness to fitness array
+			fitnessArray[i] = fitness;
+			
+			//Translate current timetable
+			translatedTimetable = t1.translateTimetable(timetable,students,staff);
+			//Print timetable
+			System.out.println(Arrays.deepToString(translatedTimetable));
+			
+			//Print Fitness
+			System.out.println(fitness);
+			
+		}
+		
 		
 		//////////////////////////////////////////////////////////////////////////
 		
-		//Make fitness object
-		GeneticOperations g1 = new GeneticOperations(students,staff,timetable);
-		
-		//Call fitness function :0 ///THIS DOESN't WORK FOR BREAKS, TAKE OUT BREAKS
-		fitness = g1.fitnessGrading();
-		System.out.println("Fitness of timetable: " + fitness);
-		
 		//Translate timetable
-		translatedTimetable = t1.translateTimetable(timetable,students,staff);
+		//translatedTimetable = t1.translateTimetable(timetable,students,staff);
 		
-		System.out.println(Arrays.deepToString(translatedTimetable));
+		//System.out.println(Arrays.deepToString(translatedTimetable));
 	}
 
 }

@@ -5,31 +5,30 @@ import java.util.Random;
 
 public class Timetable {
 
+	//This function generates a random timetable from a given arraylist of entity IDs
 	public String[][] generateTimetable(ArrayList<String> entityIDs)
 	{
 		
 		int columns;		//Size of x of timetable
 		int rows;			//Size of y of timetable
 		int x = -1;			//counter
-		String gap = "6666";
+		//String gap = "6666";
 		columns = 4;
-		rows = 18;
+		rows = 1;
 		int cellAmount = columns*rows; //Amount of cells on table (timeslots)
 		
 		String[][] timetable = new String[rows][columns];		//2-D Array to hold timetable
 		
 		int noOfBlanks = cellAmount - entityIDs.size();			//Store amount of spaces needed to be filled to fill timetable
-		System.out.println(noOfBlanks);
 		
 		
-		//Fill space with blanks
-		//for (int i = 0; i < noOfBlanks; i++)
+		//Fill space with blanks								//This block was used previously to add breaks to candidate
+		//for (int i = 0; i < noOfBlanks; i++)					//Doesn't really work 
 		//{
-			entityIDs.add(gap);
+		//	entityIDs.add(gap);
 		//}
 		
-		//Collections.shuffle(entityIDs);
-		
+		//Pick random entities for each slot (allowing duplicated)
 		for(int i = 0; i < rows; i++)
 		{
 			for(int j = 0; j < columns; j++)
@@ -47,10 +46,11 @@ public class Timetable {
 		
 	}
 	
+	//This function translates a binary timetable into a readable timetable
 	public String[][] translateTimetable(String[][] timetable, ArrayList<Student> students, ArrayList<Staff> staff) 
 	{
 
-		int rows = 18;
+		int rows = 1;
 		int columns = 4;
 		
 		String[][] translatedTimetable = new String[rows][columns];
