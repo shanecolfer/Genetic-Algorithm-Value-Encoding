@@ -19,8 +19,8 @@ public class Control {
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 50;
-		int generationSize = 100;
+		int populationSize = 2;
+		int generationSize = 2;
 		
 		double fitness = 0;
 		
@@ -44,6 +44,18 @@ public class Control {
 		
 		//Returns ArrayList of staff();
 		staff = r1.readStaff();
+		
+		//Holds total fitness of generation
+		double totalFitness = 0;
+		
+		//Holds average fitness of generation
+		double averageFitness = 0;
+		
+		//Best timetable
+		String[][] bestTimetable = null;
+		
+		//Best fitness
+		double bestFitness = 0;
 		
 		
 		////////////////////////////////////////////////////////////////////////////
@@ -115,6 +127,7 @@ public class Control {
 		
 		///////////////////////////////////////////////////////////////////////////
 		
+		
 		//Population Loop
 		for(i = 0; i < populationSize; i++)
 		{
@@ -137,21 +150,72 @@ public class Control {
 			
 			//Translate current timetable
 			translatedTimetable = t1.translateTimetable(timetable,students,staff);
+			
 			//Print timetable
-			System.out.println(Arrays.deepToString(translatedTimetable));
+			//System.out.println(Arrays.deepToString(translatedTimetable));
 			
 			//Print Fitness
-			System.out.println(fitness);
+			//System.out.println(fitness);
 			
 		}
+		
+		System.out.println("Fitness array before proportional selection");
+		System.out.println(Arrays.toString(fitnessArray));
+		
+		//Generation Loop
+		for(i = 0; i < generationSize; i++)
+		{
+			//Call proportional selection
+			GeneticOperations g1 = new GeneticOperations();
+			population = g1.proportionalSelection(fitnessArray, population, populationSize);
+			
+			//Call crossover
+			//Call mutation
+			
+			
+			//Grade new population
+			for (j = 0; j < population.size(); j++)
+			{
+				//Create new object for each loop with each timetable in population
+				GeneticOperations g2 = new GeneticOperations(students,staff,population.get(j));
+				//Grade fitness of individual timetable
+				fitness = g2.fitnessGrading();
+				
+				//Check for best fitness (OVERALL)
+				if(fitness > bestFitness)
+				{
+					bestFitness = fitness;
+					
+					//Assign best timetable (OVERALL)
+					bestTimetable = population.get(j);
+				}
+				
+				//Add this timetables fitness to the fitness array (OVERWRITING)
+				fitnessArray[j] = fitness;
+				totalFitness = totalFitness + fitness;
+			}
+			
+			averageFitness = totalFitness / populationSize;
+			
+			
+			//System.out.println(averageFitness);
+			totalFitness = 0;
+		}
+		
+		
 		
 		
 		//////////////////////////////////////////////////////////////////////////
 		
-		//Translate timetable
-		//translatedTimetable = t1.translateTimetable(timetable,students,staff);
+		Timetable t1 = new Timetable();
+		//Translate timetable ( BEST OVERALL ) 
+		translatedTimetable = t1 .translateTimetable(bestTimetable,students,staff);
+		//Print timetable
+		System.out.println(Arrays.deepToString(translatedTimetable));
+		System.out.println(bestFitness);
 		
-		//System.out.println(Arrays.deepToString(translatedTimetable));
+		//BEST FITNESS DOES NOT SEEM TO MATCH THE GIVEN BEST TIMETABLE?
+		//TEST THIS WITH A VERY SMALL POP SIZE AND GEN SIZE AND DEBUG, MAKE SURE THIS IS WORKING CORRECTLY!!!
 	}
 
 }

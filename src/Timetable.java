@@ -14,7 +14,7 @@ public class Timetable {
 		int x = -1;			//counter
 		//String gap = "6666";
 		columns = 4;
-		rows = 1;
+		rows = 18;
 		int cellAmount = columns*rows; //Amount of cells on table (timeslots)
 		
 		String[][] timetable = new String[rows][columns];		//2-D Array to hold timetable
@@ -40,8 +40,8 @@ public class Timetable {
 		}
 		
 		
-		System.out.println(entityIDs);
-		System.out.println(Arrays.deepToString(timetable));
+		//System.out.println(entityIDs);
+		//System.out.println(Arrays.deepToString(timetable));
 		return timetable;
 		
 	}

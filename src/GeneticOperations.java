@@ -63,7 +63,7 @@ public class GeneticOperations {
 								//Add student to list of students who have already gone
 								studentsGone.add(student.getStudentID());
 								
-								fitness = fitness++;
+								fitness++;
 							}
 							//END GONE ALREADY CHECK
 							
@@ -207,8 +207,55 @@ public class GeneticOperations {
 				}
 			}
 		}
+		
+		fitness = fitness + 500; //Make positive
 		return fitness;
-}
+	}
+	
+	//Proportional Selection Function
+	public ArrayList<String[][]> proportionalSelection(double[] fitnessArray, ArrayList<String[][]> population, int populationSize)
+	{
+		//ArrayList to store new population
+		ArrayList<String[][]> newPopulation = new ArrayList<>();
+		
+		double s = 0;
+		double rand = 0;
+		double partialSum = 0;
+		
+		//Calculate sum "S" of all fitnesses in population
+		for(int i=0; i<fitnessArray.length; i++)
+		{
+			s = s + fitnessArray[i];
+		}
+		
+		//Calculate random number "rand" between 0 and s
+		rand = (Math.random() * (s)) + 0;
+				
+		int i = 0;
+		int j = 0;
+		
+		//Loop through population and sum fitnesses from 0 - Sum "S"
+		while(i < fitnessArray.length)
+		{
+			partialSum = partialSum + fitnessArray[j];
+			
+			if (partialSum > rand)
+			{
+				newPopulation.add(population.get(j));
+				i++;
+				j=0;
+				rand = (Math.random() * (s)) + 0;
+				partialSum = 0;
+			}
+			
+			if (j < populationSize - 1)
+			{
+				j++;
+			}
+		}
+		
+		return newPopulation;
+	}
 	
 	
 	
@@ -221,6 +268,10 @@ public class GeneticOperations {
 	}
 	
 	
+	public GeneticOperations() {
+		// TODO Auto-generated constructor stub
+	}
+
 	//Getters and setters
 	public ArrayList<Student> getStudents() {
 		return students;
