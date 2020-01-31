@@ -14,7 +14,7 @@ public class Timetable {
 		int x = -1;			//counter
 		//String gap = "6666";
 		columns = 4;
-		rows = 18;
+		rows = 3;
 		int cellAmount = columns*rows; //Amount of cells on table (timeslots)
 		
 		String[][] timetable = new String[rows][columns];		//2-D Array to hold timetable
@@ -50,7 +50,7 @@ public class Timetable {
 	public String[][] translateTimetable(String[][] timetable, ArrayList<Student> students, ArrayList<Staff> staff) 
 	{
 
-		int rows = 1;
+		int rows = 3;
 		int columns = 4;
 		
 		String[][] translatedTimetable = new String[rows][columns];

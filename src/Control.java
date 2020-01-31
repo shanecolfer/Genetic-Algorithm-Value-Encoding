@@ -19,9 +19,23 @@ public class Control {
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 2;
-		int generationSize = 2;
+		int populationSize = 100;
+		int generationSize = 10;
 		
+		/////////////////////////////////////////////////////
+		//Test timetable1
+		String[][] parent1 = { {"1","3","9","8"}, {"5","4","7","2"}, {"6","12","11","10"}};
+		String[][] parent2 = { {"4","6","11","9"}, {"10","1","5","3"}, {"2","12","7","8"}};
+		
+		//Test arraylist
+		ArrayList<String[][]> parents = new ArrayList<>();
+		parents.add(parent1);
+		parents.add(parent2);
+		
+		GeneticOperations p1 = new GeneticOperations();
+		p1.twoDimenstionalSubstringCrossover(parents);
+		
+		/////////////////////////////////////////////////////
 		double fitness = 0;
 		
 		//ArrayList to hold student names

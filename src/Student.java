@@ -29,7 +29,7 @@ public class Student {
 	}
 
 	public String getSupervisorID() {
-		return supervisorName;
+		return supervisorID;
 	}
 
 	public void setSupervisorID(String supervisorID) {

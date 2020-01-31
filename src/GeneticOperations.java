@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GeneticOperations {
 	
@@ -16,7 +17,7 @@ public class GeneticOperations {
 		
 		int counter = 0;										//Counter				
 		int columns = 4;			//MAKE THIS DYNAMIC
-		int rows = 1;				//MAKE THIS DYNAMIC
+		int rows = 3;				//MAKE THIS DYNAMIC
 		
 		
 		//Fitness Loop
@@ -41,10 +42,16 @@ public class GeneticOperations {
 							
 							//START SUPERVISOR CHECK
 							
+							System.out.println("Fitness before: " + fitness);
 							//If student has correct supervisor increment fitness
-							if(timetable[i][j+1] == student.getSupervisorID()) // THis should be in other IF?
+							
+							System.out.println(timetable[i][j+1] + student.getSupervisorID());
+							if(timetable[i][j+1] == student.getSupervisorID()) // THis should be in other IF? //INCORRECT
 							{
-								fitness++;
+								System.out.println("Fitness before: " + fitness);
+								fitness = fitness + 1.5;
+								System.out.println("Fitness after: " + fitness);
+								
 							}
 							else //Else decrement fitness
 							{
@@ -253,6 +260,100 @@ public class GeneticOperations {
 				j++;
 			}
 		}
+		
+		return newPopulation;
+	}
+	
+	public ArrayList<String[][]> twoDimenstionalSubstringCrossover(ArrayList<String[][]> population)
+	{
+		
+		int rows = 3;
+		int columns = 4;
+		
+		//ArrayList to hold new pop
+		ArrayList<String[][]> newPopulation = new ArrayList<>();
+		
+		//Make new population old population
+		newPopulation = population;
+		
+		//Random crossover point
+		int randRow;
+		int randCol;
+		
+		//Random parent indexs
+		int randParent1;
+		int randParent2;
+		
+		//Random parent timetables 
+		String[][] parent1 = new String[rows][columns];
+		String[][] parent2 = new String[rows][columns];
+		
+		//Child timetables
+		String [][] child1 = new String[rows][columns];
+		String [][] child2 = new String[rows][columns];
+		
+		
+		//Generate rand row between 0 and number of rows
+		randRow = (int) (Math.random() * (rows)) + 0;
+		
+		//Generate rand col between 0 and number of col
+		randCol = (int) (Math.random() * (columns)) + 0;
+		
+		//Generate random timetable index from population to be parent 1
+		randParent1 = (int) (Math.random() * (population.size())) + 0;
+		//Generate random timetable index from populatuion to be parent 2
+		randParent2 = (int) (Math.random() * (population.size())) + 0;
+		
+		//Get parent timetables
+		parent1 = population.get(0);
+		parent2 = population.get(1);
+		
+		
+		
+		//TODO THIS FUNCTION IS RETURNING THE SAME CHILDREN AS PARENTS !!!!
+		
+		//Child maker 1
+		for(int i = 0; i < rows; i++)
+		{
+			for(int j = 0; j < columns; j++)
+			{
+				if(rows < randRow + 1 && columns < randCol + 1)
+				{
+					//Take first half of p1 and put into c1
+					child1[i][j] = parent1[i][j];
+				}
+				else
+				{
+					//Take second half of p2 and fill into c1
+					child1[i][j] = parent2[i][j];
+				}
+			}
+		}
+		
+		//Child maker 2
+		for(int i = 0; i < rows; i++)
+		{
+			for(int j = 0; j < columns; j++)
+			{
+				if(rows < randRow + 1 && columns < randCol + 1)
+				{
+					//Take first half of p1 and put into c1
+					child2[i][j] = parent2[i][j];
+				}
+				else
+				{
+					//Take second half of p2 and fill into c1
+					child2[i][j] = parent1[i][j];
+				}
+			}
+		}
+		
+		newPopulation.set(0, child1);
+		newPopulation.set(1, child2);
+		
+		System.out.println(Arrays.deepToString(newPopulation.get(0)));
+		System.out.println(Arrays.deepToString(newPopulation.get(1)));
+		
 		
 		return newPopulation;
 	}
