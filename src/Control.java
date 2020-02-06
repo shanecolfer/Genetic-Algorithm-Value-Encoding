@@ -19,21 +19,18 @@ public class Control {
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 100;
-		int generationSize = 10;
+		int populationSize = 500;
+		int generationSize = 100;
 		
 		/////////////////////////////////////////////////////
 		//Test timetable1
-		String[][] parent1 = { {"1","3","9","8"}, {"5","4","7","2"}, {"6","12","11","10"}};
-		String[][] parent2 = { {"4","6","11","9"}, {"10","1","5","3"}, {"2","12","7","8"}};
+		//String[][] parent1 = { {"1","3","9","8"}, {"5","4","7","2"}, {"6","12","11","10"}};
+		//String[][] parent2 = { {"4","6","11","9"}, {"10","1","5","3"}, {"2","12","7","8"}};
 		
 		//Test arraylist
-		ArrayList<String[][]> parents = new ArrayList<>();
-		parents.add(parent1);
-		parents.add(parent2);
-		
-		GeneticOperations p1 = new GeneticOperations();
-		p1.twoDimenstionalSubstringCrossover(parents);
+		//ArrayList<String[][]> parents = new ArrayList<>();
+		//parents.add(parent1);
+		//parents.add(parent2);
 		
 		/////////////////////////////////////////////////////
 		double fitness = 0;
@@ -179,11 +176,21 @@ public class Control {
 		//Generation Loop
 		for(i = 0; i < generationSize; i++)
 		{
-			//Call proportional selection
+			//Create genetic operations object
 			GeneticOperations g1 = new GeneticOperations();
+			
+			//Proportionally select returning new population
 			population = g1.proportionalSelection(fitnessArray, population, populationSize);
 			
-			//Call crossover
+			
+			//Call crossover returning new population
+			
+			for (int x = 0; x < 2; x++)
+			{
+				population = g1.twoDimensionalSubstringCrossover(population);
+			}
+			
+			
 			//Call mutation
 			
 			
@@ -212,7 +219,7 @@ public class Control {
 			averageFitness = totalFitness / populationSize;
 			
 			
-			//System.out.println(averageFitness);
+			System.out.println(averageFitness);
 			totalFitness = 0;
 		}
 		

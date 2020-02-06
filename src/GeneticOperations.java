@@ -42,15 +42,15 @@ public class GeneticOperations {
 							
 							//START SUPERVISOR CHECK
 							
-							System.out.println("Fitness before: " + fitness);
+							//System.out.println("Fitness before: " + fitness);
 							//If student has correct supervisor increment fitness
 							
-							System.out.println(timetable[i][j+1] + student.getSupervisorID());
+							//System.out.println(timetable[i][j+1] + student.getSupervisorID());
 							if(timetable[i][j+1] == student.getSupervisorID()) // THis should be in other IF? //INCORRECT
 							{
-								System.out.println("Fitness before: " + fitness);
-								fitness = fitness + 1.5;
-								System.out.println("Fitness after: " + fitness);
+								//System.out.println("Fitness before: " + fitness);
+								fitness = fitness + 3;
+								//System.out.println("Fitness after: " + fitness);
 								
 							}
 							else //Else decrement fitness
@@ -264,8 +264,10 @@ public class GeneticOperations {
 		return newPopulation;
 	}
 	
-	public ArrayList<String[][]> twoDimenstionalSubstringCrossover(ArrayList<String[][]> population)
+	public ArrayList<String[][]> twoDimensionalSubstringCrossover(ArrayList<String[][]> population)
 	{
+		
+		//TODO Make this work with the real population, rands etc
 		
 		int rows = 3;
 		int columns = 4;
@@ -305,54 +307,56 @@ public class GeneticOperations {
 		randParent2 = (int) (Math.random() * (population.size())) + 0;
 		
 		//Get parent timetables
-		parent1 = population.get(0);
-		parent2 = population.get(1);
+		parent1 = population.get(randParent1);
+		parent2 = population.get(randParent2);
+		
+		//Temp variables for parents
+		String[][] tempP1 = parent1;
+		String[][] tempP2 = parent2;
 		
 		
 		
 		//TODO THIS FUNCTION IS RETURNING THE SAME CHILDREN AS PARENTS !!!!
 		
-		//Child maker 1
+		//Child 1 maker
 		for(int i = 0; i < rows; i++)
 		{
 			for(int j = 0; j < columns; j++)
 			{
-				if(rows < randRow + 1 && columns < randCol + 1)
-				{
 					//Take first half of p1 and put into c1
-					child1[i][j] = parent1[i][j];
-				}
-				else
-				{
-					//Take second half of p2 and fill into c1
-					child1[i][j] = parent2[i][j];
-				}
+					child1[i][j] = tempP1[i][j];
+					
+					
+					//If we reach the crossover make the temp Parent1 variable Parent2 (Finishing off the rest of the crossover)
+					if(i == randRow && j == randCol)
+					{
+						tempP1 = parent2;
+					}
 			}
-		}
+		}//Child 1 created
 		
-		//Child maker 2
+		//Child 2 maker
 		for(int i = 0; i < rows; i++)
 		{
 			for(int j = 0; j < columns; j++)
 			{
-				if(rows < randRow + 1 && columns < randCol + 1)
-				{
-					//Take first half of p1 and put into c1
-					child2[i][j] = parent2[i][j];
-				}
-				else
-				{
-					//Take second half of p2 and fill into c1
-					child2[i][j] = parent1[i][j];
-				}
+					//Take first half of p2 and put into c1
+					child2[i][j] = tempP2[i][j];
+					
+					
+					//If we reach the crossover make the temp Parent1 variable Parent2 (Finishing off the rest of the crossover)
+					if(i == randRow && j == randCol)
+					{
+						tempP2 = parent1;
+					}
 			}
-		}
+		}//Child 2 created
+
+		newPopulation.set(randParent1, child1);
+		newPopulation.set(randParent2, child2);
 		
-		newPopulation.set(0, child1);
-		newPopulation.set(1, child2);
-		
-		System.out.println(Arrays.deepToString(newPopulation.get(0)));
-		System.out.println(Arrays.deepToString(newPopulation.get(1)));
+		//System.out.println(Arrays.deepToString(newPopulation.get(randParent1)));
+		//System.out.println(Arrays.deepToString(newPopulation.get(randParent2)));
 		
 		
 		return newPopulation;
