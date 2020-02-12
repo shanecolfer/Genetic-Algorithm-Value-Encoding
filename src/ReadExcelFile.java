@@ -1,10 +1,16 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;  
 
 public class ReadExcelFile {
@@ -97,7 +103,7 @@ public class ReadExcelFile {
 		r1 = s1.getRow(1);
 		c1 = r1.getCell(0);
 		
-		for(i = 1; i < rowCount - 2; i++)		//This needs to be fixed, the number of cells in this row is HARD CODED
+		for(i = 1; i < rowCount - 2; i++)		//TODO This needs to be fixed, the number of cells in this row is HARD CODED
 		{
 			r1 = s1.getRow(i);
 			c1 = r1.getCell(2);
@@ -108,5 +114,57 @@ public class ReadExcelFile {
 		
 		
 		return staff;
+	}
+	
+	public void printTimetable(String[][] timetable) throws IOException
+	{
+		
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+		XSSFSheet sheet = workbook.createSheet();
+		
+		String[] topRow = new String[] {"Student", "Supervisor", "Second R", "Monitor"};
+		
+		int i = 0;
+		
+		Row row = sheet.createRow(i);
+		
+		//Write info on top
+		for(int j = 1; j < timetable[0].length + 1; j++)
+		{
+			Cell cell = row.createCell(j);
+			
+			cell.setCellValue(topRow[j-1]);
+		}
+	
+		for(i = 1; i < timetable.length + 1; i++)
+		{
+			Row row1 = sheet.createRow(i);
+			
+			for(int j = 1; j < timetable[0].length + 1; j++)
+			{
+				Cell cell = row1.createCell(j);
+				
+				cell.setCellValue(timetable[i - 1][j - 1]);
+			}
+		}
+		
+		//Source: https://howtodoinjava.com/library/readingwriting-excel-files-in-java-poi-tutorial/
+		try
+        {
+            //Write the workbook in file system
+            FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Shane\\Documents\\GAoutput.xlsx"));
+            workbook.write(out);
+            out.close();
+            System.out.println("Timetable written successfully on disk.");
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+		//End source
+		
+		workbook.close();
+	
 	}
 }

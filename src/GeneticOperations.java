@@ -9,15 +9,13 @@ public class GeneticOperations {
 	
 	private String[][] timetable;										//Stores 2-D timetable made up of entity IDs.
 	
-	public double fitnessGrading()
+	public double fitnessGrading(int rows, int columns)
 	{
 		double fitness = 0;			//Store fitness
 		ArrayList<String> studentsGone = new ArrayList<>();		//Store students who have gone before
 		ArrayList<String> monitorsGone = new ArrayList<>();		//Store monitors who have gone before
 		
 		int counter = 0;										//Counter				
-		int columns = 4;			//MAKE THIS DYNAMIC
-		int rows = 3;				//MAKE THIS DYNAMIC
 		
 		
 		//Fitness Loop
@@ -49,7 +47,7 @@ public class GeneticOperations {
 							if(timetable[i][j+1] == student.getSupervisorID()) // THis should be in other IF? //INCORRECT
 							{
 								//System.out.println("Fitness before: " + fitness);
-								fitness = fitness + 3;
+								fitness = fitness + 1.2;
 								//System.out.println("Fitness after: " + fitness);
 								
 							}
@@ -264,14 +262,8 @@ public class GeneticOperations {
 		return newPopulation;
 	}
 	
-	public ArrayList<String[][]> twoDimensionalSubstringCrossover(ArrayList<String[][]> population)
-	{
-		
-		//TODO Make this work with the real population, rands etc
-		
-		int rows = 3;
-		int columns = 4;
-		
+	public ArrayList<String[][]> twoDimensionalSubstringCrossover(ArrayList<String[][]> population, int rows, int columns)
+	{	
 		//ArrayList to hold new pop
 		ArrayList<String[][]> newPopulation = new ArrayList<>();
 		

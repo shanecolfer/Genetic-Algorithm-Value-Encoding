@@ -19,8 +19,17 @@ public class Control {
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 500;
-		int generationSize = 100;
+		int populationSize = 1600;
+		int generationSize = 4000;
+		
+		//Rows and Column variables
+		//These get passed to various table making functions
+		int rows = 8;
+		int columns = 4;
+		
+		//Crossover rate variables
+		int crossOverRate = (populationSize / 100) * 80;
+		System.out.println("Crossover rate: " + crossOverRate);
 		
 		/////////////////////////////////////////////////////
 		//Test timetable1
@@ -144,7 +153,7 @@ public class Control {
 		{
 			//Generate random timetable
 			Timetable t1 = new Timetable();
-			timetable = t1.generateTimetable(entityIDs);
+			timetable = t1.generateTimetable(entityIDs, rows, columns);
 			
 			//Add timetable to population
 			population.add(timetable);
@@ -154,13 +163,13 @@ public class Control {
 			GeneticOperations g1 = new GeneticOperations(students,staff,timetable);
 			
 			//Call fitness function
-			fitness = g1.fitnessGrading();
+			fitness = g1.fitnessGrading(rows, columns);
 			
 			//Add fitness to fitness array
 			fitnessArray[i] = fitness;
 			
 			//Translate current timetable
-			translatedTimetable = t1.translateTimetable(timetable,students,staff);
+			translatedTimetable = t1.translateTimetable(timetable,students,staff,rows,columns);
 			
 			//Print timetable
 			//System.out.println(Arrays.deepToString(translatedTimetable));
@@ -185,9 +194,9 @@ public class Control {
 			
 			//Call crossover returning new population
 			
-			for (int x = 0; x < 2; x++)
+			for (int x = 0; x < crossOverRate; x++)
 			{
-				population = g1.twoDimensionalSubstringCrossover(population);
+				population = g1.twoDimensionalSubstringCrossover(population, rows, columns);
 			}
 			
 			
@@ -200,7 +209,7 @@ public class Control {
 				//Create new object for each loop with each timetable in population
 				GeneticOperations g2 = new GeneticOperations(students,staff,population.get(j));
 				//Grade fitness of individual timetable
-				fitness = g2.fitnessGrading();
+				fitness = g2.fitnessGrading(rows, columns);
 				
 				//Check for best fitness (OVERALL)
 				if(fitness > bestFitness)
@@ -230,10 +239,13 @@ public class Control {
 		
 		Timetable t1 = new Timetable();
 		//Translate timetable ( BEST OVERALL ) 
-		translatedTimetable = t1 .translateTimetable(bestTimetable,students,staff);
+		translatedTimetable = t1.translateTimetable(bestTimetable,students,staff,rows,columns);
 		//Print timetable
 		System.out.println(Arrays.deepToString(translatedTimetable));
 		System.out.println(bestFitness);
+		
+		//Write timetable to file
+		r1.printTimetable(translatedTimetable);
 		
 		//BEST FITNESS DOES NOT SEEM TO MATCH THE GIVEN BEST TIMETABLE?
 		//TEST THIS WITH A VERY SMALL POP SIZE AND GEN SIZE AND DEBUG, MAKE SURE THIS IS WORKING CORRECTLY!!!

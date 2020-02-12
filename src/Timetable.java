@@ -6,15 +6,11 @@ import java.util.Random;
 public class Timetable {
 
 	//This function generates a random timetable from a given arraylist of entity IDs
-	public String[][] generateTimetable(ArrayList<String> entityIDs)
+	public String[][] generateTimetable(ArrayList<String> entityIDs, int rows, int columns)
 	{
 		
-		int columns;		//Size of x of timetable
-		int rows;			//Size of y of timetable
 		int x = -1;			//counter
 		//String gap = "6666";
-		columns = 4;
-		rows = 3;
 		int cellAmount = columns*rows; //Amount of cells on table (timeslots)
 		
 		String[][] timetable = new String[rows][columns];		//2-D Array to hold timetable
@@ -47,11 +43,8 @@ public class Timetable {
 	}
 	
 	//This function translates a binary timetable into a readable timetable
-	public String[][] translateTimetable(String[][] timetable, ArrayList<Student> students, ArrayList<Staff> staff) 
+	public String[][] translateTimetable(String[][] timetable, ArrayList<Student> students, ArrayList<Staff> staff, int rows, int columns) 
 	{
-
-		int rows = 3;
-		int columns = 4;
 		
 		String[][] translatedTimetable = new String[rows][columns];
 		
