@@ -24,6 +24,7 @@ public class Control {
 		
 		//Rows and Column variables
 		//These get passed to various table making functions
+		//They denote the size of the timetable (x*y)
 		int rows = 8;
 		int columns = 4;
 		
@@ -64,6 +65,9 @@ public class Control {
 		
 		//Returns ArrayList of staff();
 		staff = r1.readStaff();
+		
+		//Array of fitnesses
+		double averageFitnessArray[] = new double[generationSize];
 		
 		//Holds total fitness of generation
 		double totalFitness = 0;
@@ -228,7 +232,8 @@ public class Control {
 			averageFitness = totalFitness / populationSize;
 			
 			
-			System.out.println(averageFitness);
+			System.out.println("Generation: " + (i+1) + " // Fitness: " + (averageFitness - 500));
+			averageFitnessArray[i] = averageFitness - 500;
 			totalFitness = 0;
 		}
 		
@@ -245,7 +250,7 @@ public class Control {
 		System.out.println(bestFitness);
 		
 		//Write timetable to file
-		r1.printTimetable(translatedTimetable);
+		r1.printTimetable(translatedTimetable, averageFitnessArray);
 		
 		//BEST FITNESS DOES NOT SEEM TO MATCH THE GIVEN BEST TIMETABLE?
 		//TEST THIS WITH A VERY SMALL POP SIZE AND GEN SIZE AND DEBUG, MAKE SURE THIS IS WORKING CORRECTLY!!!

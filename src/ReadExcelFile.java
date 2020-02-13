@@ -116,7 +116,7 @@ public class ReadExcelFile {
 		return staff;
 	}
 	
-	public void printTimetable(String[][] timetable) throws IOException
+	public void printTimetable(String[][] timetable, double[] averageFitnessArray) throws IOException
 	{
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -137,6 +137,7 @@ public class ReadExcelFile {
 			cell.setCellValue(topRow[j-1]);
 		}
 	
+		//Write timetable
 		for(i = 1; i < timetable.length + 1; i++)
 		{
 			Row row1 = sheet.createRow(i);
@@ -147,6 +148,15 @@ public class ReadExcelFile {
 				
 				cell.setCellValue(timetable[i - 1][j - 1]);
 			}
+		}
+		
+		Row row1 = sheet.createRow(timetable.length + 1);
+		
+		for(i = 0; i < averageFitnessArray.length; i++)
+		{
+			Cell cell = row1.createCell(i);
+			
+			cell.setCellValue(averageFitnessArray[i]);
 		}
 		
 		//Source: https://howtodoinjava.com/library/readingwriting-excel-files-in-java-poi-tutorial/
