@@ -19,8 +19,8 @@ public class Control {
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 900;
-		int generationSize = 2000;
+		int populationSize = 4000;
+		int generationSize = 4000;
 		
 		//Rows and Column variables
 		//These get passed to various table making functions
@@ -28,23 +28,38 @@ public class Control {
 		int rows = 8;
 		int columns = 4;
 		
+		int mutationCount = 0;
+		
 		//Crossover rate variables
-		int crossOverRate = (populationSize / 100) * 90;
-		int mutationRate = (populationSize / 100) * 1;
+		int crossOverRate = (int)(populationSize * 0.5);
+		double mutationRate = (int)(populationSize * 0.001); //TODO TEST THIS NOW!
+		System.out.println("Mutation rate: " + mutationRate);
 	
 		System.out.println("Crossover rate: " + crossOverRate);
 		
 		/////////////////////////////////////////////////////
+		/*
+		//Mutation TEST
+		
 		//Test timetable1
-		//String[][] parent1 = { {"1","3","9","8"}, {"5","4","7","2"}, {"6","12","11","10"}};
-		//String[][] parent2 = { {"4","6","11","9"}, {"10","1","5","3"}, {"2","12","7","8"}};
+		String[][] parent1 = { {"1","3","9","8"}, {"5","4","7","2"}, {"6","12","11","10"}};
 		
-		//Test arraylist
-		//ArrayList<String[][]> parents = new ArrayList<>();
-		//parents.add(parent1);
-		//parents.add(parent2);
+		//Test ArrayList
+		ArrayList<String[][]> parents = new ArrayList<>();
 		
+		//Add single timetable to ArrayList
+		parents.add(parent1);
+		
+		//Create object of Genetic Operations
+		GeneticOperations g3 = new GeneticOperations();
+		
+		//Call mutation
+		parents = g3.twoPointSwapMutation(parents, rows, columns);
+		
+		System.out.println(Arrays.deepToString(parents.get(0)));
+		*/
 		/////////////////////////////////////////////////////
+		
 		double fitness = 0;
 		
 		//ArrayList to hold student names
@@ -212,6 +227,8 @@ public class Control {
 			for (int x = 0; x < mutationRate; x++)
 			{
 				population = g1.twoPointSwapMutation(population, rows, columns);
+				mutationCount++;
+				//System.out.println("Mutation Initiated");
 			}
 			
 			
@@ -264,6 +281,8 @@ public class Control {
 		
 		//BEST FITNESS DOES NOT SEEM TO MATCH THE GIVEN BEST TIMETABLE?
 		//TEST THIS WITH A VERY SMALL POP SIZE AND GEN SIZE AND DEBUG, MAKE SURE THIS IS WORKING CORRECTLY!!!
+		
+		System.out.println("Mutation count: " + mutationCount);
 	}
 
 }

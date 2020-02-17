@@ -394,6 +394,9 @@ public class GeneticOperations {
 		//Re insert into population
 		newPopulation.set(randTimetableIndex, selectedTimetable);
 		
+		//System.out.println("Swap point 1: " + randRow1 + " " + randCol1);
+		//System.out.println("Swap point 2: " + randRow2 + " " + randCol2);
+		
 		return newPopulation;
 		
 	}
