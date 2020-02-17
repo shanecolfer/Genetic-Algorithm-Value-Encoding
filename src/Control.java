@@ -19,8 +19,8 @@ public class Control {
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 1600;
-		int generationSize = 4000;
+		int populationSize = 900;
+		int generationSize = 2000;
 		
 		//Rows and Column variables
 		//These get passed to various table making functions
@@ -29,7 +29,9 @@ public class Control {
 		int columns = 4;
 		
 		//Crossover rate variables
-		int crossOverRate = (populationSize / 100) * 80;
+		int crossOverRate = (populationSize / 100) * 90;
+		int mutationRate = (populationSize / 100) * 1;
+	
 		System.out.println("Crossover rate: " + crossOverRate);
 		
 		/////////////////////////////////////////////////////
@@ -205,6 +207,12 @@ public class Control {
 			
 			
 			//Call mutation
+			//TODO CHECK IF THIS MUTATION FUNCTION ACTUALLY WORKS
+			
+			for (int x = 0; x < mutationRate; x++)
+			{
+				population = g1.twoPointSwapMutation(population, rows, columns);
+			}
 			
 			
 			//Grade new population
@@ -231,8 +239,10 @@ public class Control {
 			
 			averageFitness = totalFitness / populationSize;
 			
-			
-			System.out.println("Generation: " + (i+1) + " // Fitness: " + (averageFitness - 500));
+			if (i % 100 == 0)
+			{
+				System.out.println("Generation: " + (i) + " // Fitness: " + (averageFitness - 500));
+			}
 			averageFitnessArray[i] = averageFitness - 500;
 			totalFitness = 0;
 		}

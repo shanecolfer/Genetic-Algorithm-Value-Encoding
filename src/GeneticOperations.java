@@ -306,10 +306,6 @@ public class GeneticOperations {
 		String[][] tempP1 = parent1;
 		String[][] tempP2 = parent2;
 		
-		
-		
-		//TODO THIS FUNCTION IS RETURNING THE SAME CHILDREN AS PARENTS !!!!
-		
 		//Child 1 maker
 		for(int i = 0; i < rows; i++)
 		{
@@ -352,6 +348,54 @@ public class GeneticOperations {
 		
 		
 		return newPopulation;
+	}
+	
+	public ArrayList<String[][]> twoPointSwapMutation(ArrayList<String[][]> population, int rows, int columns)
+	{
+		//ArrayList to hold new pop
+		ArrayList<String[][]> newPopulation = new ArrayList<>();
+		
+		//Make new population old population
+		newPopulation = population;
+		
+		//Hold selected timetable
+		String[][] selectedTimetable = new String[rows][columns];
+		
+		//Hold selected value at index one and two
+		String value1;
+		String value2;
+		
+		//Generate random timetable index from population to be mutated
+		int randTimetableIndex = (int) (Math.random() * (population.size())) + 0;
+		
+		//Generate rand row between 0 and number of rows to be first swap point
+		int randRow1 = (int) (Math.random() * (rows)) + 0;
+		
+		//Generate rand col between 0 and number of col to be second swap point
+		int randCol1 = (int) (Math.random() * (columns)) + 0;
+		
+		//Generate rand row between 0 and number of rows to be first swap point
+		int randRow2 = (int) (Math.random() * (rows)) + 0;
+		
+		//Generate rand col between 0 and number of col to be second swap point
+		int randCol2 = (int) (Math.random() * (columns)) + 0;
+		
+		//Assign selected timetable
+		selectedTimetable = newPopulation.get(randTimetableIndex);
+		
+		//Retrieve values from selected timetable
+		value1 = selectedTimetable[randRow1][randCol1];
+		value2 = selectedTimetable[randRow2][randCol2];
+		
+		//Do swapping
+		selectedTimetable[randRow1][randCol1] = value2;
+		selectedTimetable[randRow2][randCol2] = value1;
+		
+		//Re insert into population
+		newPopulation.set(randTimetableIndex, selectedTimetable);
+		
+		return newPopulation;
+		
 	}
 	
 	
