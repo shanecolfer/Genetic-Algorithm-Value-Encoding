@@ -47,13 +47,13 @@ public class GeneticOperations {
 							if(timetable[i][j+1] == student.getSupervisorID()) // THis should be in other IF? //INCORRECT
 							{
 								//System.out.println("Fitness before: " + fitness);
-								fitness = fitness + 1.2;
+								fitness = fitness + 3;
 								//System.out.println("Fitness after: " + fitness);
 								
 							}
 							else //Else decrement fitness
 							{
-								fitness = fitness - 1.5;
+								fitness = fitness - 3;
 							}
 							
 							//END SUPERVISOR CHECK

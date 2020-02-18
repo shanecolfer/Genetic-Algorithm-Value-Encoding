@@ -5,13 +5,16 @@ public class Student {
 	private String studentID;		//Stores the student ID
 	private String supervisorName;	//Stores the student's supervisor's name
 	private String supervisorID;	//Stores the student's supervisor ID
+	private String secondReaderName;
+	private String secondReaderID;
 	
 	
 	//Constructor
-	public Student (String studentName, String supervisorName)
+	public Student (String studentName, String supervisorName, String secondReaderName)
 	{
 		this.studentName = studentName;
 		this.supervisorName = supervisorName;
+		this.secondReaderName = secondReaderName;
 	}
 	
 	public Student (String studentName)
@@ -56,6 +59,22 @@ public class Student {
 	public String toString() {
 		return "Student [studentName=" + studentName + ", studentID=" + studentID + ", supervisorName=" + supervisorName
 				+ ", supervisorID=" + supervisorID + "]";
+	}
+
+	public String getSecondReaderID() {
+		return secondReaderID;
+	}
+
+	public void setSecondReaderID(String secondReaderID) {
+		this.secondReaderID = secondReaderID;
+	}
+
+	public String getSecondReaderName() {
+		return secondReaderName;
+	}
+
+	public void setSecondReaderName(String secondReaderName) {
+		this.secondReaderName = secondReaderName;
 	}
 	
 	

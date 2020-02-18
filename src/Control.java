@@ -12,27 +12,30 @@ public class Control {
 		
 		int i = 0; //Counter
 		int j; //Counter
-		int numEntities = 13; //Number of entities (8 students, 3 staff)
-		int idLength = 4;    //Length of ID (bitstring)
+		int idLength = 10;    //Length of ID (bitstring)
+		String[] monitors = new String[] {"Damian Gordon", "Sean O'Leary", "Svetlana Hensman", "Ciaran Kelly", "Brian Keegan", "Jack O'Neill"}; 
+		ArrayList<String> staffNames = new ArrayList<String>(); //Hold staff names
+		
+		
 		String temp = "";
 		String[][] timetable;
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 4000;
+		int populationSize = 3800;
 		int generationSize = 4000;
 		
 		//Rows and Column variables
 		//These get passed to various table making functions
 		//They denote the size of the timetable (x*y)
-		int rows = 8;
+		int rows = 50;
 		int columns = 4;
 		
 		int mutationCount = 0;
 		
 		//Crossover rate variables
-		int crossOverRate = (int)(populationSize * 0.5);
-		double mutationRate = (int)(populationSize * 0.001); //TODO TEST THIS NOW!
+		int crossOverRate = (int)(populationSize * 0.9);
+		double mutationRate = (int)(populationSize * 0.005); //TODO TEST THIS NOW!
 		System.out.println("Mutation rate: " + mutationRate);
 	
 		System.out.println("Crossover rate: " + crossOverRate);
@@ -80,8 +83,40 @@ public class Control {
 		//Returns ArrayList of students
 		students = r1.readStudents();
 		
+		System.out.println(students);
+		
 		//Returns ArrayList of staff();
 		staff = r1.readStaff();
+		System.out.println(staff);		//Now we have a list of staff members but it is made up from the supervisor list (Which is fine, there are no monitors outside of this list)
+		
+		System.out.println("Students size: " + students.size());
+		System.out.println("Staff size: " + staff.size());
+		
+		int numEntities = students.size() + staff.size(); //Number of entities for ID generation
+		System.out.println("Number of Entities: " + numEntities);
+		
+		
+		//THIS BLOCK OF CODE CAN BE USED TO ADD MONITORS IF THEY ARE NOT IN THE SUPERVISOR LIST
+		/*
+		for(i = 0; i < staff.size(); i++)
+		{
+			staffNames.add(staff.get(i).getStaffName());
+		}
+	
+		for(i = 0; i < monitors.length; i++)
+		{
+			if(staffNames.contains(monitors[i]))				//If the staff members name is already on the list, do nothing AVOIDING DUPLICATED
+			{
+				
+			}
+			else												//If the staff members name is not on the list, add them!
+			{
+				Staff s1 = new Staff(monitors[i]);
+				staff.add(s1);
+			}
+		}
+		*/
+		//END OF USELESS BLOCK OF CODE
 		
 		//Array of fitnesses
 		double averageFitnessArray[] = new double[generationSize];
@@ -126,7 +161,15 @@ public class Control {
 			
 		}
 		
+		
 		System.out.println(entityIDs);
+		
+		for(i = 0; i < entityIDs.size(); i++)
+		{
+			System.out.println(entityIDs.get(i));
+		}
+		
+		
 				
 		/////////////////////////////////////////////////////////////////////////////
 				
@@ -168,6 +211,8 @@ public class Control {
 		
 		///////////////////////////////////////////////////////////////////////////
 		
+		
+		// COMMENTED OUT FOR INPUT TESTING
 		
 		//Population Loop
 		for(i = 0; i < populationSize; i++)
@@ -256,14 +301,13 @@ public class Control {
 			
 			averageFitness = totalFitness / populationSize;
 			
-			if (i % 100 == 0)
-			{
+			//if (i % 100 == 0)
+			//{
 				System.out.println("Generation: " + (i) + " // Fitness: " + (averageFitness - 500));
-			}
+			//}
 			averageFitnessArray[i] = averageFitness - 500;
 			totalFitness = 0;
 		}
-		
 		
 		
 		
@@ -274,7 +318,7 @@ public class Control {
 		translatedTimetable = t1.translateTimetable(bestTimetable,students,staff,rows,columns);
 		//Print timetable
 		System.out.println(Arrays.deepToString(translatedTimetable));
-		System.out.println(bestFitness);
+		System.out.println("Best Fitness: " + (bestFitness - 500));
 		
 		//Write timetable to file
 		r1.printTimetable(translatedTimetable, averageFitnessArray);
@@ -283,6 +327,8 @@ public class Control {
 		//TEST THIS WITH A VERY SMALL POP SIZE AND GEN SIZE AND DEBUG, MAKE SURE THIS IS WORKING CORRECTLY!!!
 		
 		System.out.println("Mutation count: " + mutationCount);
+		
+		 //COMMENTED OUT FOR INPUT TESTING
 	}
 
 }

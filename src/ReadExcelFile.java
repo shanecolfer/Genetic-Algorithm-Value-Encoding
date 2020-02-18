@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -11,7 +12,8 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;  
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 public class ReadExcelFile {
 	
@@ -25,7 +27,7 @@ public class ReadExcelFile {
 		
 		try
 		{
-			FileInputStream fs = new FileInputStream("C:\\Users\\Shane\\Documents\\info.xlsx");
+			FileInputStream fs = new FileInputStream("C:\\Users\\Shane\\Documents\\Student-Supervisor-List.xlsx");
 			
 			//Create workbook object (buffer whole stream into memory)
 			wb = new XSSFWorkbook(fs);
@@ -49,17 +51,22 @@ public class ReadExcelFile {
 		//Select Cell
 		Cell c1;
 		Cell c2;
+		Cell c3;
 		
-		r1 = s1.getRow(1);
-		c1 = r1.getCell(0);
+		r1 = s1.getRow(3);
+		c1 = r1.getCell(2);
 		
-		for(i = 1; i < rowCount + 1; i++)
+		for(i = 3; i < 139; i++)		//TODO THIS IS HARD CODED TO 2020 EXCEL SHEET
 		{
 			r1 = s1.getRow(i);
-			c1 = r1.getCell(0);
-			c2 = r1.getCell(1);
-			System.out.println(c1.getStringCellValue());
-			Student s2 = new Student(c1.getStringCellValue(), c2.getStringCellValue());
+			c1 = r1.getCell(1);
+			c2 = r1.getCell(2);
+			c3 = r1.getCell(6);
+
+			//System.out.println(c3.getStringCellValue());
+			//System.out.println(c2.getStringCellValue());
+			//System.out.println(c1.getStringCellValue());
+			Student s2 = new Student(c3.getStringCellValue(), c1.getStringCellValue(), c2.getStringCellValue());
 			students.add(s2);
 		}
 		
@@ -69,6 +76,8 @@ public class ReadExcelFile {
 	
 	public ArrayList<Staff> readStaff()
 	{
+		ArrayList <String> staffNames = new ArrayList<>();
+		
 		ArrayList<Staff> staff = new ArrayList<>();
 		int i = 0; //Counter
 		
@@ -76,7 +85,7 @@ public class ReadExcelFile {
 		
 		try
 		{
-			FileInputStream fs = new FileInputStream("C:\\Users\\Shane\\Documents\\info.xlsx");
+			FileInputStream fs = new FileInputStream("C:\\Users\\Shane\\Documents\\Student-Supervisor-List.xlsx");
 			
 			//Create workbook object (buffer whole stream into memory)
 			wb = new XSSFWorkbook(fs);
@@ -100,16 +109,30 @@ public class ReadExcelFile {
 		//Select Cell
 		Cell c1;
 		
-		r1 = s1.getRow(1);
+		r1 = s1.getRow(3);
 		c1 = r1.getCell(0);
 		
-		for(i = 1; i < rowCount - 2; i++)		//TODO This needs to be fixed, the number of cells in this row is HARD CODED
+		String currentName;
+		
+		for(i = 3; i < 139; i++)		//TODO This needs to be fixed, the number of cells in this row is HARD CODED
 		{
 			r1 = s1.getRow(i);
-			c1 = r1.getCell(2);
-			System.out.println(c1.getStringCellValue());
+			c1 = r1.getCell(1);
 			Staff s2 = new Staff(c1.getStringCellValue());
-			staff.add(s2);
+			
+			
+			//System.out.println(staffNames);
+			
+			if(staffNames.contains(c1.getStringCellValue())) //This is checking has the staff member gone already? 
+			{
+				//System.out.println("TRUE");
+			}
+			else											//If not lets add them to list, this is because we don't want duplicates in the staff list
+			{
+				staff.add(s2);
+				staffNames.add(c1.getStringCellValue());
+			}
+			
 		}
 		
 		
