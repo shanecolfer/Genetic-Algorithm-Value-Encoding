@@ -23,7 +23,7 @@ public class Control {
 		
 		//Population & Generation variables
 		int populationSize = 3800;
-		int generationSize = 4000;
+		int generationSize = 500;
 		
 		//Rows and Column variables
 		//These get passed to various table making functions
@@ -34,7 +34,7 @@ public class Control {
 		int mutationCount = 0;
 		
 		//Crossover rate variables
-		int crossOverRate = (int)(populationSize * 0.9);
+		int crossOverRate = (int)(populationSize * 0.7);
 		double mutationRate = (int)(populationSize * 0.005); //TODO TEST THIS NOW!
 		System.out.println("Mutation rate: " + mutationRate);
 	
@@ -89,6 +89,11 @@ public class Control {
 		staff = r1.readStaff();
 		System.out.println(staff);		//Now we have a list of staff members but it is made up from the supervisor list (Which is fine, there are no monitors outside of this list)
 		
+		for(i = 0; i < staff.size(); i++)
+		{
+			System.out.println(staff.get(i).getStaffName());
+		}
+		
 		System.out.println("Students size: " + students.size());
 		System.out.println("Staff size: " + staff.size());
 		
@@ -139,6 +144,10 @@ public class Control {
 		//Hold id's of entities in the form of bit strings
 		ArrayList<String> entityIDs = new ArrayList<String>();
 		
+		System.out.println("Before Loop NumEntities :" + numEntities);
+		
+		//Reset i to 0
+		i = 0;
 		//Generate random bit strings for entities
 		while(i < numEntities)
 		{
@@ -173,6 +182,7 @@ public class Control {
 				
 		/////////////////////////////////////////////////////////////////////////////
 				
+		System.out.println(entityIDs.size());
 		
 		//Set student IDs
 		for(i = 0; i<students.size(); i++)
@@ -203,6 +213,32 @@ public class Control {
 			}
 		}
 		
+		//Loop through students, matching their second reader names with second reader IDs and assinging them
+		
+		for(i=0; i<students.size(); i++)
+		{
+			for(j=0; j<staff.size(); j++)
+			{
+				if(students.get(i).getSecondReaderName().equals(staff.get(j).getStaffName()))
+				{
+					students.get(i).setSecondReaderID(staff.get(j).getStaffID());
+				}
+			}
+		}
+		
+		//Go through monitor list and find monitor IDs and replace names
+		//with IDs
+		for(i=0; i<monitors.length; i++)
+		{
+			for(j=0; j<staff.size(); j++)
+			{
+				if(staff.get(j).getStaffName().contentEquals(monitors[i]))
+				{
+					monitors[i] = staff.get(j).getStaffID();
+				}
+			}
+		}
+		
 		////////////////////////////////////////////////////////////////////////////
 		
 		//Printing
@@ -219,7 +255,8 @@ public class Control {
 		{
 			//Generate random timetable
 			Timetable t1 = new Timetable();
-			timetable = t1.generateTimetable(entityIDs, rows, columns);
+			timetable = t1.generateTimetable(entityIDs, monitors, rows, columns);
+			//System.out.println(Arrays.deepToString(timetable));
 			
 			//Add timetable to population
 			population.add(timetable);

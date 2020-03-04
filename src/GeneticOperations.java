@@ -17,7 +17,6 @@ public class GeneticOperations {
 		
 		int counter = 0;										//Counter				
 		
-		
 		//Fitness Loop
 		for(int i = 0; i < rows; i++)
 		{
@@ -39,8 +38,6 @@ public class GeneticOperations {
 							fitness++;
 							
 							//START SUPERVISOR CHECK
-							
-							//System.out.println("Fitness before: " + fitness);
 							//If student has correct supervisor increment fitness
 							
 							//System.out.println(timetable[i][j+1] + student.getSupervisorID());
@@ -57,6 +54,18 @@ public class GeneticOperations {
 							}
 							
 							//END SUPERVISOR CHECK
+							
+							//START SECOND READER CHECK
+							//If student has correct second reader increment fitness
+							if(timetable[i][j+2] == student.getSecondReaderID())
+							{
+								fitness = fitness + 3;
+							}
+							else //Else decrement
+							{
+								fitness = fitness - 3;
+							}
+							//END SECOND READER CHECK
 							
 							//START GONE ALREADY CHECK
 							if(studentsGone.contains(student.getStudentID()))
@@ -264,6 +273,8 @@ public class GeneticOperations {
 	
 	public ArrayList<String[][]> twoDimensionalSubstringCrossover(ArrayList<String[][]> population, int rows, int columns)
 	{	
+		 //To exlude monitors from crossover 
+		
 		//ArrayList to hold new pop
 		ArrayList<String[][]> newPopulation = new ArrayList<>();
 		
@@ -352,6 +363,9 @@ public class GeneticOperations {
 	
 	public ArrayList<String[][]> twoPointSwapMutation(ArrayList<String[][]> population, int rows, int columns)
 	{
+		//TODO TEST THIS
+		columns--; //To exclude monitors from mutation operations
+		
 		//ArrayList to hold new pop
 		ArrayList<String[][]> newPopulation = new ArrayList<>();
 		

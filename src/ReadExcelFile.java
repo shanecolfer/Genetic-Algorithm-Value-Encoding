@@ -66,7 +66,7 @@ public class ReadExcelFile {
 			//System.out.println(c3.getStringCellValue());
 			//System.out.println(c2.getStringCellValue());
 			//System.out.println(c1.getStringCellValue());
-			Student s2 = new Student(c3.getStringCellValue(), c1.getStringCellValue(), c2.getStringCellValue());
+			Student s2 = new Student(c3.getStringCellValue(), c1.getStringCellValue(), c2.getStringCellValue()); //Name, Supervisor, Second Reader
 			students.add(s2);
 		}
 		
@@ -114,6 +114,7 @@ public class ReadExcelFile {
 		
 		String currentName;
 		
+		//Read from staff list not insterting duplicates
 		for(i = 3; i < 139; i++)		//TODO This needs to be fixed, the number of cells in this row is HARD CODED
 		{
 			r1 = s1.getRow(i);
@@ -133,6 +134,24 @@ public class ReadExcelFile {
 				staffNames.add(c1.getStringCellValue());
 			}
 			
+		}
+		
+		//Read from supervisor list inserting any that weren't on staff list
+		for(i = 3; i < 139; i++)
+		{
+			r1 = s1.getRow(i);
+			c1 = r1.getCell(2);
+			Staff s2 = new Staff(c1.getStringCellValue());
+			
+			if(staffNames.contains(c1.getStringCellValue())) //This is checking has the staff member gone already? 
+			{
+				//System.out.println("TRUE");
+			}
+			else											//If not lets add them to list, this is because we don't want duplicates in the staff list
+			{
+				staff.add(s2);
+				staffNames.add(c1.getStringCellValue());
+			}
 		}
 		
 		

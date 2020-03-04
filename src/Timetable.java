@@ -6,7 +6,7 @@ import java.util.Random;
 public class Timetable {
 
 	//This function generates a random timetable from a given arraylist of entity IDs
-	public String[][] generateTimetable(ArrayList<String> entityIDs, int rows, int columns)
+	public String[][] generateTimetable(ArrayList<String> entityIDs, String[] monitors, int rows, int columns)
 	{
 		
 		int x = -1;			//counter
@@ -14,7 +14,6 @@ public class Timetable {
 		int cellAmount = columns*rows; //Amount of cells on table (timeslots)
 		
 		String[][] timetable = new String[rows][columns];		//2-D Array to hold timetable
-		
 		int noOfBlanks = cellAmount - entityIDs.size();			//Store amount of spaces needed to be filled to fill timetable
 		
 		
@@ -24,15 +23,25 @@ public class Timetable {
 		//	entityIDs.add(gap);
 		//}
 		
-		//Pick random entities for each slot (allowing duplicated)
+		//TODO TEST THIS
+		
+		//Pick random entities for each slot (allowing duplicates) EXLUDING MONITORS
 		for(int i = 0; i < rows; i++)
 		{
-			for(int j = 0; j < columns; j++)
+			for(int j = 0; j < columns; j++) //Columns - 1 because we're leaving out monitors
 			{
 				Random rand = new Random();
 			    String randomElement = entityIDs.get(rand.nextInt(entityIDs.size()));
 				timetable[i][j] = randomElement;
 			}
+		}
+		
+		//FILLING IN COLUMN 4 with MONITORS
+		for(int i = 0; i < rows; i ++)
+		{
+			Random rand = new Random();
+		    String randomElement = monitors[rand.nextInt(monitors.length)];
+			timetable[i][3] = randomElement;
 		}
 		
 		

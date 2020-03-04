@@ -55,10 +55,12 @@ public class Student {
 		this.supervisorName = supervisorName;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Student [studentName=" + studentName + ", studentID=" + studentID + ", supervisorName=" + supervisorName
-				+ ", supervisorID=" + supervisorID + "]";
+				+ ", supervisorID=" + supervisorID + ", secondReaderName=" + secondReaderName + ", secondReaderID="
+				+ secondReaderID + "]";
 	}
 
 	public String getSecondReaderID() {
