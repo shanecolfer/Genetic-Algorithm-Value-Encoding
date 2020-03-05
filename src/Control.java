@@ -22,20 +22,27 @@ public class Control {
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 3800;
-		int generationSize = 500;
+		int populationSize = 1000;
+		int generationSize = 5000;
+		
+		//Variable for storing how many correct rows are in best timetable
+		int correctRows = 0;
 		
 		//Rows and Column variables
 		//These get passed to various table making functions
 		//They denote the size of the timetable (x*y)
-		int rows = 50;
-		int columns = 4;
+		int rows = 136;
+		int columns = 3;
 		
 		int mutationCount = 0;
 		
 		//Crossover rate variables
-		int crossOverRate = (int)(populationSize * 0.7);
-		double mutationRate = (int)(populationSize * 0.005); //TODO TEST THIS NOW!
+		double testCross = 0.9;
+		double mutationrateTest = 0.1;
+		
+		double crossOverRate = (int)(populationSize * 0.9);
+		double mutationRate = (int)(populationSize * 0.1); //TODO TEST THIS NOW!
+		
 		System.out.println("Mutation rate: " + mutationRate);
 	
 		System.out.println("Crossover rate: " + crossOverRate);
@@ -304,7 +311,6 @@ public class Control {
 			
 			
 			//Call mutation
-			//TODO CHECK IF THIS MUTATION FUNCTION ACTUALLY WORKS
 			
 			for (int x = 0; x < mutationRate; x++)
 			{
@@ -344,6 +350,10 @@ public class Control {
 			//}
 			averageFitnessArray[i] = averageFitness - 500;
 			totalFitness = 0;
+			
+			//crossOverRate = crossOverRate - 0.0001;
+			//mutationRate = mutationRate + 0.0001;
+			
 		}
 		
 		
@@ -353,9 +363,40 @@ public class Control {
 		Timetable t1 = new Timetable();
 		//Translate timetable ( BEST OVERALL ) 
 		translatedTimetable = t1.translateTimetable(bestTimetable,students,staff,rows,columns);
+		
+		//Check how many correct rows are in best timetable
+		for(i = 0; i < rows; i++)
+		{
+			for(j = 0; j < columns; j++)
+			{
+				if(j==0)
+				{
+					for (Student student : students) 
+					{
+						if(student.getStudentID().contentEquals(bestTimetable[i][j]))
+						{
+							
+							//START CORRECT ROW CHECK
+							//If student has correct supervisor and second reader increment correct row
+							
+							if(bestTimetable[i][j+1] == student.getSupervisorID() && bestTimetable[i][j+2] == student.getSecondReaderID()) // THis should be in other IF? //INCORRECT
+							{
+								correctRows++;
+							}
+							//END CORRECT ROW CHECK
+						}
+					}
+				}
+			}
+		}
+		//End checking how many correct rows are in best timetable
+		
 		//Print timetable
 		System.out.println(Arrays.deepToString(translatedTimetable));
 		System.out.println("Best Fitness: " + (bestFitness - 500));
+		
+		//Print how many rows were correct in best timetable
+		System.out.println("Correct row count: " + correctRows);
 		
 		//Write timetable to file
 		r1.printTimetable(translatedTimetable, averageFitnessArray);
@@ -367,5 +408,4 @@ public class Control {
 		
 		 //COMMENTED OUT FOR INPUT TESTING
 	}
-
 }

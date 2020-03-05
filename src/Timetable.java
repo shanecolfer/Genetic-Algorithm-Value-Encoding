@@ -25,10 +25,12 @@ public class Timetable {
 		
 		//TODO TEST THIS
 		
-		//Pick random entities for each slot (allowing duplicates) EXLUDING MONITORS
+		Collections.shuffle(entityIDs);
+		
+		//Pick random entities for each slot (allowing duplicates)
 		for(int i = 0; i < rows; i++)
 		{
-			for(int j = 0; j < columns; j++) //Columns - 1 because we're leaving out monitors
+			for(int j = 0; j < columns; j++) //Columns
 			{
 				Random rand = new Random();
 			    String randomElement = entityIDs.get(rand.nextInt(entityIDs.size()));
@@ -37,12 +39,12 @@ public class Timetable {
 		}
 		
 		//FILLING IN COLUMN 4 with MONITORS
-		for(int i = 0; i < rows; i ++)
-		{
-			Random rand = new Random();
-		    String randomElement = monitors[rand.nextInt(monitors.length)];
-			timetable[i][3] = randomElement;
-		}
+		//for(int i = 0; i < rows; i ++)
+		//{
+		//	Random rand = new Random();
+		//    String randomElement = monitors[rand.nextInt(monitors.length)];
+		//	timetable[i][3] = randomElement;
+	//	}
 		
 		
 		//System.out.println(entityIDs);

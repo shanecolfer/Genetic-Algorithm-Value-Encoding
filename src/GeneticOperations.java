@@ -41,7 +41,7 @@ public class GeneticOperations {
 							//If student has correct supervisor increment fitness
 							
 							//System.out.println(timetable[i][j+1] + student.getSupervisorID());
-							if(timetable[i][j+1] == student.getSupervisorID()) // THis should be in other IF? //INCORRECT
+							if(timetable[i][j+1] == student.getSupervisorID()) 
 							{
 								//System.out.println("Fitness before: " + fitness);
 								fitness = fitness + 3;
@@ -50,7 +50,7 @@ public class GeneticOperations {
 							}
 							else //Else decrement fitness
 							{
-								fitness = fitness - 3;
+								fitness = fitness - 1.5;
 							}
 							
 							//END SUPERVISOR CHECK
@@ -63,7 +63,7 @@ public class GeneticOperations {
 							}
 							else //Else decrement
 							{
-								fitness = fitness - 3;
+								fitness = fitness - 1.5;
 							}
 							//END SECOND READER CHECK
 							
@@ -119,14 +119,14 @@ public class GeneticOperations {
 							}
 							
 							//Duplicate entity check (Is supervisor also monitor?)
-							if(timetable[i][j+2] == staff.getStaffID())
-							{
-								fitness = fitness - 1.5;	//Second reader and supervisor are the same entity
-							}
-							else
-							{
-								fitness++;					//They are different entities
-							}
+							//if(timetable[i][j+2] == staff.getStaffID())
+							//{
+							//	fitness = fitness - 1.5;	//Second reader and supervisor are the same entity
+							//}
+							//else
+							//{
+							//	fitness++;					//They are different entities
+						//	}
 							
 						}
 					}
@@ -155,14 +155,14 @@ public class GeneticOperations {
 							fitness++;
 							
 							//Duplicate entity check is second reader also monitor?
-							if(timetable[i][j+1] == staff.getStaffID())
-							{
-								fitness = fitness - 1.5;	//Monitor and second reader are the same entity
-							}
-							else
-							{
-								fitness++;					//They are different entities
-							}
+							//if(timetable[i][j+1] == staff.getStaffID())
+							//{
+							//	fitness = fitness - 1.5;	//Monitor and second reader are the same entity
+							//}
+							//else
+							//{
+						//		fitness++;					//They are different entities
+						//	}
 							
 						}
 					}
@@ -181,6 +181,7 @@ public class GeneticOperations {
 				//END SUPERVISOR CHECK
 				}
 				
+				/*
 				else if(j==3)		//If we're on the 4th column, MONITOR CHECKS
 					
 				{
@@ -218,7 +219,7 @@ public class GeneticOperations {
 					//Reset counter
 					counter = 0;
 					
-				}
+				}*/
 			}
 		}
 		
@@ -273,7 +274,6 @@ public class GeneticOperations {
 	
 	public ArrayList<String[][]> twoDimensionalSubstringCrossover(ArrayList<String[][]> population, int rows, int columns)
 	{	
-		 //To exlude monitors from crossover 
 		
 		//ArrayList to hold new pop
 		ArrayList<String[][]> newPopulation = new ArrayList<>();
@@ -364,7 +364,7 @@ public class GeneticOperations {
 	public ArrayList<String[][]> twoPointSwapMutation(ArrayList<String[][]> population, int rows, int columns)
 	{
 		//TODO TEST THIS
-		columns--; //To exclude monitors from mutation operations
+		//columns--; //To exclude monitors from mutation operations
 		
 		//ArrayList to hold new pop
 		ArrayList<String[][]> newPopulation = new ArrayList<>();
