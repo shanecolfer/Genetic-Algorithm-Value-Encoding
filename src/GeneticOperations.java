@@ -7,13 +7,13 @@ public class GeneticOperations {
 	private ArrayList<Staff> staff = new ArrayList<>();				//Stores ArrayList of staff members (Possible
 																	//	supervisors, second readers, and monitors).
 	
-	private String[][] timetable;										//Stores 2-D timetable made up of entity IDs.
+	private int[][] timetable;										//Stores 2-D timetable made up of entity IDs.
 	
 	public double fitnessGrading(int rows, int columns)
 	{
 		double fitness = 0;			//Store fitness
-		ArrayList<String> studentsGone = new ArrayList<>();		//Store students who have gone before
-		ArrayList<String> monitorsGone = new ArrayList<>();		//Store monitors who have gone before
+		ArrayList<Integer> studentsGone = new ArrayList<>();		//Store students who have gone before
+		ArrayList<Integer> monitorsGone = new ArrayList<>();		//Store monitors who have gone before
 		
 		int counter = 0;										//Counter				
 		
@@ -31,7 +31,7 @@ public class GeneticOperations {
 					//entity is a student
 					for (Student student : students) 
 					{
-						if(student.getStudentID().contentEquals(timetable[i][j]))
+						if(student.getStudentID() == timetable[i][j])
 						{
 							counter++;
 							//Entity is a student fitness incremented
@@ -50,7 +50,7 @@ public class GeneticOperations {
 							}
 							else //Else decrement fitness
 							{
-								fitness = fitness - 1.5;
+								fitness = fitness - 3;
 							}
 							
 							//END SUPERVISOR CHECK
@@ -59,7 +59,7 @@ public class GeneticOperations {
 							//If student has correct second reader increment fitness
 							if(timetable[i][j+2] == student.getSecondReaderID())
 							{
-								fitness = fitness + 3;
+								fitness = fitness + 1.5;
 							}
 							else //Else decrement
 							{
@@ -70,7 +70,7 @@ public class GeneticOperations {
 							//START GONE ALREADY CHECK
 							if(studentsGone.contains(student.getStudentID()))
 							{
-								fitness = fitness - 1.5;
+								fitness = fitness - 3;
 							}
 							else
 							{
@@ -102,7 +102,7 @@ public class GeneticOperations {
 					//START POSITION CHECK
 					for (Staff staff : staff) 
 					{
-						if(staff.getStaffID().contentEquals(timetable[i][j]))
+						if(staff.getStaffID() == timetable[i][j])
 						{
 							counter++;
 							//Entity is in correct position (Staff member)
@@ -148,7 +148,7 @@ public class GeneticOperations {
 					//START POSITION CHECK
 					for (Staff staff : staff) 
 					{
-						if(staff.getStaffID().contentEquals(timetable[i][j]))
+						if(staff.getStaffID() == timetable[i][j])
 						{
 							counter++;
 							//Entity is in correct position (Staff member)
@@ -228,10 +228,10 @@ public class GeneticOperations {
 	}
 	
 	//Proportional Selection Function
-	public ArrayList<String[][]> proportionalSelection(double[] fitnessArray, ArrayList<String[][]> population, int populationSize)
+	public ArrayList<int[][]> proportionalSelection(double[] fitnessArray, ArrayList<int[][]> population, int populationSize)
 	{
 		//ArrayList to store new population
-		ArrayList<String[][]> newPopulation = new ArrayList<>();
+		ArrayList<int[][]> newPopulation = new ArrayList<>();
 		
 		double s = 0;
 		double rand = 0;
@@ -272,11 +272,11 @@ public class GeneticOperations {
 		return newPopulation;
 	}
 	
-	public ArrayList<String[][]> twoDimensionalSubstringCrossover(ArrayList<String[][]> population, int rows, int columns)
+	public ArrayList<int[][]> twoDimensionalSubstringCrossover(ArrayList<int[][]> population, int rows, int columns)
 	{	
 		
 		//ArrayList to hold new pop
-		ArrayList<String[][]> newPopulation = new ArrayList<>();
+		ArrayList<int[][]> newPopulation = new ArrayList<>();
 		
 		//Make new population old population
 		newPopulation = population;
@@ -290,12 +290,12 @@ public class GeneticOperations {
 		int randParent2;
 		
 		//Random parent timetables 
-		String[][] parent1 = new String[rows][columns];
-		String[][] parent2 = new String[rows][columns];
+		int[][] parent1 = new int[rows][columns];
+		int[][] parent2 = new int[rows][columns];
 		
 		//Child timetables
-		String [][] child1 = new String[rows][columns];
-		String [][] child2 = new String[rows][columns];
+		int[][] child1 = new int[rows][columns];
+		int[][] child2 = new int[rows][columns];
 		
 		
 		//Generate rand row between 0 and number of rows
@@ -314,8 +314,8 @@ public class GeneticOperations {
 		parent2 = population.get(randParent2);
 		
 		//Temp variables for parents
-		String[][] tempP1 = parent1;
-		String[][] tempP2 = parent2;
+		int[][] tempP1 = parent1;
+		int[][] tempP2 = parent2;
 		
 		//Child 1 maker
 		for(int i = 0; i < rows; i++)
@@ -361,23 +361,23 @@ public class GeneticOperations {
 		return newPopulation;
 	}
 	
-	public ArrayList<String[][]> twoPointSwapMutation(ArrayList<String[][]> population, int rows, int columns)
+	public ArrayList<int[][]> twoPointSwapMutation(ArrayList<int[][]> population, int rows, int columns)
 	{
 		//TODO TEST THIS
 		//columns--; //To exclude monitors from mutation operations
 		
 		//ArrayList to hold new pop
-		ArrayList<String[][]> newPopulation = new ArrayList<>();
+		ArrayList<int[][]> newPopulation = new ArrayList<>();
 		
 		//Make new population old population
 		newPopulation = population;
 		
 		//Hold selected timetable
-		String[][] selectedTimetable = new String[rows][columns];
+		int[][] selectedTimetable = new int[rows][columns];
 		
 		//Hold selected value at index one and two
-		String value1;
-		String value2;
+		int value1;
+		int value2;
 		
 		//Generate random timetable index from population to be mutated
 		int randTimetableIndex = (int) (Math.random() * (population.size())) + 0;
@@ -418,7 +418,7 @@ public class GeneticOperations {
 	
 	
 	//Constructor
-	public GeneticOperations(ArrayList<Student> students, ArrayList<Staff> staff, String[][] timetable) {
+	public GeneticOperations(ArrayList<Student> students, ArrayList<Staff> staff, int[][] timetable) {
 		super();
 		this.students = students;
 		this.staff = staff;
@@ -447,11 +447,11 @@ public class GeneticOperations {
 		this.staff = staff;
 	}
 
-	public String[][] getTimetable() {
+	public int[][] getTimetable() {
 		return timetable;
 	}
 
-	public void setTimetable(String[][] timetable) {
+	public void setTimetable(int[][] timetable) {
 		this.timetable = timetable;
 	}
 }

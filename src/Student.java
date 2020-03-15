@@ -2,11 +2,11 @@
 public class Student {
 
 	private String studentName;		//Stores the student name
-	private String studentID;		//Stores the student ID
+	private int studentID;		//Stores the student ID
 	private String supervisorName;	//Stores the student's supervisor's name
-	private String supervisorID;	//Stores the student's supervisor ID
+	private int supervisorID;	//Stores the student's supervisor ID
 	private String secondReaderName;
-	private String secondReaderID;
+	private int secondReaderID;
 	
 	
 	//Constructor
@@ -23,19 +23,19 @@ public class Student {
 	}
 
 	//Getters and setters
-	public String getStudentID() {
+	public int getStudentID() {
 		return studentID;
 	}
 
-	public void setStudentID(String studentID) {
+	public void setStudentID(int studentID) {
 		this.studentID = studentID;
 	}
 
-	public String getSupervisorID() {
+	public int getSupervisorID() {
 		return supervisorID;
 	}
 
-	public void setSupervisorID(String supervisorID) {
+	public void setSupervisorID(int supervisorID) {
 		this.supervisorID = supervisorID;
 	}
 	
@@ -63,11 +63,11 @@ public class Student {
 				+ secondReaderID + "]";
 	}
 
-	public String getSecondReaderID() {
+	public int getSecondReaderID() {
 		return secondReaderID;
 	}
 
-	public void setSecondReaderID(String secondReaderID) {
+	public void setSecondReaderID(int secondReaderID) {
 		this.secondReaderID = secondReaderID;
 	}
 

@@ -1,8 +1,11 @@
 import java.awt.List;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Random;
 
 public class Control {
@@ -12,18 +15,18 @@ public class Control {
 		
 		int i = 0; //Counter
 		int j; //Counter
-		int idLength = 10;    //Length of ID (bitstring)
+		//int idLength = 8;    //Length of ID (bitstring)
 		String[] monitors = new String[] {"Damian Gordon", "Sean O'Leary", "Svetlana Hensman", "Ciaran Kelly", "Brian Keegan", "Jack O'Neill"}; 
-		ArrayList<String> staffNames = new ArrayList<String>(); //Hold staff names
+		//ArrayList<String> staffNames = new ArrayList<String>(); //Hold staff names
 		
 		
-		String temp = "";
-		String[][] timetable;
+		//String temp = "";
+		int[][] timetable;
 		String[][] translatedTimetable;
 		
 		//Population & Generation variables
-		int populationSize = 1000;
-		int generationSize = 5000;
+		int populationSize = 3800;
+		int generationSize = 100;
 		
 		//Variable for storing how many correct rows are in best timetable
 		int correctRows = 0;
@@ -31,17 +34,17 @@ public class Control {
 		//Rows and Column variables
 		//These get passed to various table making functions
 		//They denote the size of the timetable (x*y)
-		int rows = 136;
+		int rows = 78; //Hangs after 78
 		int columns = 3;
 		
 		int mutationCount = 0;
 		
 		//Crossover rate variables
-		double testCross = 0.9;
-		double mutationrateTest = 0.1;
+		//double testCross = 0.9;
+		//double mutationrateTest = 0.1;
 		
 		double crossOverRate = (int)(populationSize * 0.9);
-		double mutationRate = (int)(populationSize * 0.1); //TODO TEST THIS NOW!
+		double mutationRate = (int)(populationSize * 0.005); //TODO TEST THIS NOW!
 		
 		System.out.println("Mutation rate: " + mutationRate);
 	
@@ -79,7 +82,7 @@ public class Control {
 		ArrayList<Staff> staff = new ArrayList<>();
 		
 		//ArrayList to hold population of timetables
-		ArrayList<String[][]> population = new ArrayList<>();
+		ArrayList<int[][]> population = new ArrayList<>();
 		
 		//Array to hold fitnesses of candidates in population
 		double[] fitnessArray= new double[populationSize];
@@ -105,6 +108,7 @@ public class Control {
 		System.out.println("Staff size: " + staff.size());
 		
 		int numEntities = students.size() + staff.size(); //Number of entities for ID generation
+		int[] entityIDs = new int[numEntities];
 		System.out.println("Number of Entities: " + numEntities);
 		
 		
@@ -140,7 +144,7 @@ public class Control {
 		double averageFitness = 0;
 		
 		//Best timetable
-		String[][] bestTimetable = null;
+		int[][] bestTimetable = null;
 		
 		//Best fitness
 		double bestFitness = 0;
@@ -148,14 +152,12 @@ public class Control {
 		
 		////////////////////////////////////////////////////////////////////////////
 		
-		//Hold id's of entities in the form of bit strings
-		ArrayList<String> entityIDs = new ArrayList<String>();
-		
 		System.out.println("Before Loop NumEntities :" + numEntities);
 		
 		//Reset i to 0
 		i = 0;
 		//Generate random bit strings for entities
+		/*
 		while(i < numEntities)
 		{
 			temp = "";
@@ -176,31 +178,26 @@ public class Control {
 			}
 			
 		}
+		*/
 		
-		
-		System.out.println(entityIDs);
-		
-		for(i = 0; i < entityIDs.size(); i++)
-		{
-			System.out.println(entityIDs.get(i));
-		}
-		
-		
-				
 		/////////////////////////////////////////////////////////////////////////////
 				
-		System.out.println(entityIDs.size());
+		for(i = 0; i < numEntities; i++)
+		{
+			entityIDs[i] = i;
+			System.out.println(i);
+		}
 		
 		//Set student IDs
 		for(i = 0; i<students.size(); i++)
 		{
-			students.get(i).setStudentID(entityIDs.get(i));
+			students.get(i).setStudentID(entityIDs[i]);
 		}
 		
 		//Set staff IDs
 		for(j=0;j<staff.size(); i++)
 		{
-			staff.get(j).setStaffID(entityIDs.get(i));
+			staff.get(j).setStaffID(entityIDs[i]);
 			j++;
 		}
 		
@@ -233,6 +230,7 @@ public class Control {
 			}
 		}
 		
+		/* UNCOMMENT IF USING MONITORS
 		//Go through monitor list and find monitor IDs and replace names
 		//with IDs
 		for(i=0; i<monitors.length; i++)
@@ -245,6 +243,7 @@ public class Control {
 				}
 			}
 		}
+		*/
 		
 		////////////////////////////////////////////////////////////////////////////
 		
@@ -279,7 +278,7 @@ public class Control {
 			fitnessArray[i] = fitness;
 			
 			//Translate current timetable
-			translatedTimetable = t1.translateTimetable(timetable,students,staff,rows,columns);
+			//translatedTimetable = t1.translateTimetable(timetable,students,staff,rows,columns);
 			
 			//Print timetable
 			//System.out.println(Arrays.deepToString(translatedTimetable));
@@ -373,7 +372,7 @@ public class Control {
 				{
 					for (Student student : students) 
 					{
-						if(student.getStudentID().contentEquals(bestTimetable[i][j]))
+						if(student.getStudentID() == (bestTimetable[i][j]))
 						{
 							
 							//START CORRECT ROW CHECK
@@ -405,6 +404,10 @@ public class Control {
 		//TEST THIS WITH A VERY SMALL POP SIZE AND GEN SIZE AND DEBUG, MAKE SURE THIS IS WORKING CORRECTLY!!!
 		
 		System.out.println("Mutation count: " + mutationCount);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		System.out.println(dateFormat.format(cal.getTime()));
 		
 		 //COMMENTED OUT FOR INPUT TESTING
 	}

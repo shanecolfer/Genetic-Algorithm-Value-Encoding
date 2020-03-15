@@ -2,10 +2,10 @@
 public class Staff {
 	
 	private String staffName;
-	private String staffID;
+	private int staffID;
 	
 	//Constructor
-	public Staff(String staffName, String staffID)
+	public Staff(String staffName, int staffID)
 	{
 		this.staffName = staffName;
 		this.staffID = staffID;
@@ -32,11 +32,11 @@ public class Staff {
 		this.staffName = staffName;
 	}
 
-	public String getStaffID() {
+	public int getStaffID() {
 		return staffID;
 	}
 
-	public void setStaffID(String staffID) {
+	public void setStaffID(int staffID) {
 		this.staffID = staffID;
 	}
 	
