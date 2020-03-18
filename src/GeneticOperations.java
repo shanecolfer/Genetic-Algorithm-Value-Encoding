@@ -237,14 +237,19 @@ public class GeneticOperations {
 		double rand = 0;
 		double partialSum = 0;
 		
+		
+		
 		//Calculate sum "S" of all fitnesses in population
 		for(int i=0; i<fitnessArray.length; i++)
 		{
 			s = s + fitnessArray[i];
 		}
 		
+		
+		
 		//Calculate random number "rand" between 0 and s
 		rand = (Math.random() * (s)) + 0;
+		
 				
 		int i = 0;
 		int j = 0;
@@ -257,6 +262,7 @@ public class GeneticOperations {
 			if (partialSum > rand)
 			{
 				newPopulation.add(population.get(j));
+				//System.out.println(i);
 				i++;
 				j=0;
 				rand = (Math.random() * (s)) + 0;

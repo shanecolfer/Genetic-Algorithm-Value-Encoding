@@ -313,7 +313,7 @@ public class GUI {
 				//Rows and Column variables
 				//These get passed to various table making functions
 				//They denote the size of the timetable (x*y)
-				int rows = 78; //Hangs after 78
+				int rows = 50; //Hangs after 78
 				int columns = 3;
 				
 				int mutationCount = 0;
@@ -467,7 +467,8 @@ public class GUI {
 				*/
 				
 				/////////////////////////////////////////////////////////////////////////////
-						
+				//Set entity IDS
+				
 				for(i = 0; i < numEntities; i++)
 				{
 					entityIDs[i] = i;
@@ -516,6 +517,7 @@ public class GUI {
 					}
 				}
 				
+				///////////////////////////////////////////////////////////////////////////
 				/* UNCOMMENT IF USING MONITORS
 				//Go through monitor list and find monitor IDs and replace names
 				//with IDs
@@ -580,12 +582,14 @@ public class GUI {
 				//Generation Loop
 				for(i = 0; i < generationSize; i++)
 				{
+					
 					//Create genetic operations object
 					GeneticOperations g1 = new GeneticOperations();
 					
 					//Proportionally select returning new population
 					population = g1.proportionalSelection(fitnessArray, population, populationSize);
 					
+					//System.out.println("AFTER PROPORTIONAL SEL");
 					
 					//Call crossover returning new population
 					
@@ -631,7 +635,7 @@ public class GUI {
 					
 					//if (i % 100 == 0)
 					//{
-						System.out.println("Generation: " + (i) + " // Fitness: " + (averageFitness - 500));
+						//System.out.println("Generation: " + (i) + " // Fitness: " + (averageFitness - 500));
 					//}
 						
 					averageFitnessArray[i] = averageFitness - 500;
@@ -740,6 +744,11 @@ public class GUI {
 			{
 				//ArrayList<Double> status = get();
 				Display.getDefault().asyncExec(() -> styledText.append("\nAlgorithm Complete!"));
+				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				Calendar cal = Calendar.getInstance();
+				
+				Display.getDefault().asyncExec(() -> styledText.append(dateFormat.format(cal.getTime())));
 				
 			}
 			
