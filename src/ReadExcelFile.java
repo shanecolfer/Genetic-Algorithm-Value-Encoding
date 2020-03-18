@@ -17,6 +17,31 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcelFile {
 	
+	private String inputFile;
+	private String outputDirectory;
+	
+	public ReadExcelFile(String inputFile, String outputDirectory) {
+		super();
+		this.inputFile = inputFile;
+		this.outputDirectory = outputDirectory;
+	}
+	
+	public String getInputFile() {
+		return inputFile;
+	}
+
+	public void setInputFile(String inputFile) {
+		this.inputFile = inputFile;
+	}
+
+	public String getOutputDirectory() {
+		return outputDirectory;
+	}
+
+	public void setOutputDirectory(String outputDirectory) {
+		this.outputDirectory = outputDirectory;
+	}
+
 	public ArrayList<Student> readStudents() throws IOException
 	{
 		
@@ -27,7 +52,7 @@ public class ReadExcelFile {
 		
 		try
 		{
-			FileInputStream fs = new FileInputStream("C:\\Users\\Shane\\Documents\\Student-Supervisor-List.xlsx");
+			FileInputStream fs = new FileInputStream(inputFile);
 			
 			//Create workbook object (buffer whole stream into memory)
 			wb = new XSSFWorkbook(fs);
@@ -85,7 +110,7 @@ public class ReadExcelFile {
 		
 		try
 		{
-			FileInputStream fs = new FileInputStream("C:\\Users\\Shane\\Documents\\Student-Supervisor-List.xlsx");
+			FileInputStream fs = new FileInputStream(inputFile);
 			
 			//Create workbook object (buffer whole stream into memory)
 			wb = new XSSFWorkbook(fs);
@@ -205,7 +230,7 @@ public class ReadExcelFile {
 		try
         {
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Shane\\Documents\\GAoutput.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File(outputDirectory + "\\GAoutput.xlsx"));
             workbook.write(out);
             out.close();
             System.out.println("Timetable written successfully on disk.");

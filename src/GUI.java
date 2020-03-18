@@ -52,9 +52,30 @@ public class GUI {
 	private double mutationRate;
 	private double crossOverRate;
 	
+	//Genetic Algorithm file input and output variables
+	private String inputFile;
+	private String outputDir;
+	
 	private StyledText styledText;
 	private ProgressBar progressBar;
 	
+	private Boolean cancelGA = false;
+	
+	public String getInputFile() {
+		return inputFile;
+	}
+
+	public void setInputFile(String inputFile) {
+		this.inputFile = inputFile;
+	}
+
+	public String getOutputDir() {
+		return outputDir;
+	}
+
+	public void setOutputDir(String outputDir) {
+		this.outputDir = outputDir;
+	}
 
 	public ProgressBar getProgressBar() {
 		return progressBar;
@@ -201,6 +222,7 @@ public class GUI {
 		lblChooseOutputLocationl.setBounds(10, 18, 154, 15);
 		lblChooseOutputLocationl.setText("Choose output location:");
 		
+		//Choose Output
 		Button chooseOutBtn = new Button(grpOutputDirectory, SWT.NONE);
 		chooseOutBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -240,20 +262,42 @@ public class GUI {
 				mutationRate = Double.parseDouble(mutationRateBox.getText());
 				crossOverRate = Double.parseDouble(crossOverRateBox.getText());
 				
+				//Read in file data
+				inputFile = selectedFile;
+				outputDir = selectedOutPath;
+				
+				//Add double slash
+				inputFile.replace("\\", "\\\\");
+				outputDir.replace("\\", "\\\\");
+				
+				System.out.println(inputFile);
+				System.out.println(outputDir);
+				
 				//Run the GA
 				geneticAlgorithm();
-				
 				
 			}
 		});
 		//End run GA
 		
-		runGA.setBounds(10, 356, 230, 25);
-		runGA.setText("Run Genetic Algorithm");
+		runGA.setBounds(10, 350, 108, 25);
+		runGA.setText("Run!");
 		
 		Label lblNewLabel = new Label(shlFinalYearDemos, SWT.NONE);
 		lblNewLabel.setBounds(259, 410, 55, 15);
 		lblNewLabel.setText("Progress");
+		
+		Button btnStopGa = new Button(shlFinalYearDemos, SWT.NONE);
+		btnStopGa.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) 
+			{
+				cancelGA = true;
+			}
+		});
+		
+		btnStopGa.setBounds(132, 350, 108, 25);
+		btnStopGa.setText("Stop!");
 		
 		chooseInputBtn.addSelectionListener(new SelectionAdapter() 
 		{
@@ -374,7 +418,7 @@ public class GUI {
 				double[] fitnessArray= new double[populationSize];
 				
 				//ReadExcelFile object
-				ReadExcelFile r1 = new ReadExcelFile();
+				ReadExcelFile r1 = new ReadExcelFile(inputFile, outputDir);
 				
 				//Returns ArrayList of students
 				students = r1.readStudents();
@@ -659,6 +703,13 @@ public class GUI {
 					
 					publish(newUpdate);
 					
+					//If the cancel button has been pressed reset it and exit the generation loop
+					if(cancelGA == true)
+					{
+						cancelGA = false;
+						break;
+					}
+					
 					
 					//crossOverRate = crossOverRate - 0.0001;
 					//mutationRate = mutationRate + 0.0001;
@@ -773,5 +824,13 @@ public class GUI {
 
 	public void setSelectedOutPath(String selectedOutPath) {
 		this.selectedOutPath = selectedOutPath;
+	}
+
+	public Boolean getCancelGA() {
+		return cancelGA;
+	}
+
+	public void setCancelGA(Boolean cancelGA) {
+		this.cancelGA = cancelGA;
 	}
 }
