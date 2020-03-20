@@ -223,7 +223,7 @@ public class GeneticOperations {
 			}
 		}
 		
-		fitness = fitness + 500; //Make positive
+		fitness = fitness + 1500; //Make positive
 		return fitness;
 	}
 	

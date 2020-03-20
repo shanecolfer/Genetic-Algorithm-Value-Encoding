@@ -52,6 +52,11 @@ public class GUI {
 	private double mutationRate;
 	private double crossOverRate;
 	
+	//Timetable parameters
+	private int noOfRoomsInt;
+	private int noOfTimeslotsInt;
+	private int noOfDaysInt;
+	
 	//Genetic Algorithm file input and output variables
 	private String inputFile;
 	private String outputDir;
@@ -60,6 +65,9 @@ public class GUI {
 	private ProgressBar progressBar;
 	
 	private Boolean cancelGA = false;
+	private Text noOfDays;
+	private Text noOfTimeslots;
+	private Text noOfRooms;
 	
 	public String getInputFile() {
 		return inputFile;
@@ -91,6 +99,32 @@ public class GUI {
 
 	public void setStyledText(StyledText styledText) {
 		this.styledText = styledText;
+	}
+	
+	
+
+	public int getNoOfRoomsInt() {
+		return noOfRoomsInt;
+	}
+
+	public void setNoOfRoomsInt(int noOfRoomsInt) {
+		this.noOfRoomsInt = noOfRoomsInt;
+	}
+
+	public int getNoOfTimeslotsInt() {
+		return noOfTimeslotsInt;
+	}
+
+	public void setNoOfTimeslotsInt(int noOfTimeslotsInt) {
+		this.noOfTimeslotsInt = noOfTimeslotsInt;
+	}
+
+	public int getNoOfDaysInt() {
+		return noOfDaysInt;
+	}
+
+	public void setNoOfDaysInt(int noOfDaysInt) {
+		this.noOfDaysInt = noOfDaysInt;
 	}
 
 	/**
@@ -262,6 +296,11 @@ public class GUI {
 				mutationRate = Double.parseDouble(mutationRateBox.getText());
 				crossOverRate = Double.parseDouble(crossOverRateBox.getText());
 				
+				//Read in timetable parameters
+				noOfRoomsInt = Integer.parseInt(noOfRooms.getText());
+				noOfDaysInt = Integer.parseInt(noOfDays.getText());
+				noOfTimeslotsInt = Integer.parseInt(noOfTimeslots.getText());
+				
 				//Read in file data
 				inputFile = selectedFile;
 				outputDir = selectedOutPath;
@@ -280,7 +319,7 @@ public class GUI {
 		});
 		//End run GA
 		
-		runGA.setBounds(10, 350, 108, 25);
+		runGA.setBounds(132, 356, 108, 25);
 		runGA.setText("Run!");
 		
 		Label lblNewLabel = new Label(shlFinalYearDemos, SWT.NONE);
@@ -296,8 +335,33 @@ public class GUI {
 			}
 		});
 		
-		btnStopGa.setBounds(132, 350, 108, 25);
+		btnStopGa.setBounds(10, 356, 108, 25);
 		btnStopGa.setText("Stop!");
+		
+		Group grpTimetableInformation = new Group(shlFinalYearDemos, SWT.NONE);
+		grpTimetableInformation.setText("Timetable Information");
+		grpTimetableInformation.setBounds(10, 180, 230, 170);
+		
+		Label lblNewLabel_1 = new Label(grpTimetableInformation, SWT.NONE);
+		lblNewLabel_1.setBounds(10, 17, 69, 15);
+		lblNewLabel_1.setText("No. of Days");
+		
+		Label lblNewLabel_2 = new Label(grpTimetableInformation, SWT.NONE);
+		lblNewLabel_2.setBounds(10, 44, 97, 15);
+		lblNewLabel_2.setText("No. of Timeslots");
+		
+		Label lblNoOfRooms = new Label(grpTimetableInformation, SWT.NONE);
+		lblNoOfRooms.setBounds(10, 71, 80, 15);
+		lblNoOfRooms.setText("No. of Rooms");
+		
+		noOfDays = new Text(grpTimetableInformation, SWT.BORDER);
+		noOfDays.setBounds(126, 14, 76, 21);
+		
+		noOfTimeslots = new Text(grpTimetableInformation, SWT.BORDER);
+		noOfTimeslots.setBounds(126, 41, 76, 21);
+		
+		noOfRooms = new Text(grpTimetableInformation, SWT.BORDER);
+		noOfRooms.setBounds(126, 68, 76, 21);
 		
 		chooseInputBtn.addSelectionListener(new SelectionAdapter() 
 		{
@@ -357,7 +421,7 @@ public class GUI {
 				//Rows and Column variables
 				//These get passed to various table making functions
 				//They denote the size of the timetable (x*y)
-				int rows = 50; //Hangs after 78
+				int rows = noOfTimeslotsInt * noOfDaysInt; //Hangs after 78 //Multiply number of days * number of timeslots per day to get full timetable size
 				int columns = 3;
 				
 				int mutationCount = 0;
@@ -633,6 +697,7 @@ public class GUI {
 					//Proportionally select returning new population
 					population = g1.proportionalSelection(fitnessArray, population, populationSize);
 					
+					
 					//System.out.println("AFTER PROPORTIONAL SEL");
 					
 					//Call crossover returning new population
@@ -648,7 +713,7 @@ public class GUI {
 					for (int x = 0; x < mutationRate; x++)
 					{
 						population = g1.twoPointSwapMutation(population, rows, columns);
-						mutationCount++;
+						//mutationCount++;
 						//System.out.println("Mutation Initiated");
 					}
 					
@@ -682,7 +747,7 @@ public class GUI {
 						//System.out.println("Generation: " + (i) + " // Fitness: " + (averageFitness - 500));
 					//}
 						
-					averageFitnessArray[i] = averageFitness - 500;
+					averageFitnessArray[i] = averageFitness - 1500;
 					totalFitness = 0;
 					
 					//If we're on the first generation, add some info into arraylist to send to GUI
@@ -690,15 +755,15 @@ public class GUI {
 					{
 						//Add gen number to new update
 						newUpdate.add((double)i);
-						newUpdate.add(averageFitness - 500);
-						newUpdate.add(bestFitness - 500);
+						newUpdate.add(averageFitness - 1500);
+						newUpdate.add(bestFitness - 1500);
 						newUpdate.add((double)generationSize);
 					}
 					else //Else replace the already created objects in the arraylist -> so I can keep the same index's 
 					{
 						newUpdate.set(0, (double)i);
-						newUpdate.set(1, averageFitness - 500);
-						newUpdate.set(2, bestFitness - 500);
+						newUpdate.set(1, averageFitness - 1500);
+						newUpdate.set(2, bestFitness - 1500);
 					}
 					
 					publish(newUpdate);
@@ -753,13 +818,16 @@ public class GUI {
 				
 				//Print timetable
 				System.out.println(Arrays.deepToString(translatedTimetable));
-				System.out.println("Best Fitness: " + (bestFitness - 500));
+				System.out.println("Best Fitness: " + (bestFitness - 1500));
 				
 				//Print how many rows were correct in best timetable
 				System.out.println("Correct row count: " + correctRows);
 				
-				//Write timetable to file
+				//Write timetable to file raw
 				r1.printTimetable(translatedTimetable, averageFitnessArray);
+				
+				//Write timetable to file fancy
+				r1.printTimetableBetter(translatedTimetable, averageFitnessArray);
 				
 				//BEST FITNESS DOES NOT SEEM TO MATCH THE GIVEN BEST TIMETABLE?
 				//TEST THIS WITH A VERY SMALL POP SIZE AND GEN SIZE AND DEBUG, MAKE SURE THIS IS WORKING CORRECTLY!!!
