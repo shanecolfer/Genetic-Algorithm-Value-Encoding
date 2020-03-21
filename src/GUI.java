@@ -213,9 +213,9 @@ public class GUI {
 				
 				//Update text fields
 				generationSizeBox.setText("3800");
-				populationSizeBox.setText("1000");
-				crossOverRateBox.setText("0.9");
-				mutationRateBox.setText("0.005");
+				populationSizeBox.setText("3800");
+				crossOverRateBox.setText("0.95");
+				mutationRateBox.setText("0.04");
 			}
 		});
 		revertDefault.setBounds(10, 135, 99, 25);
@@ -541,7 +541,7 @@ public class GUI {
 				int[][] bestTimetable = null;
 				
 				//Best fitness
-				double bestFitness = 0;
+				double bestFitness = -1000;
 				
 				
 				////////////////////////////////////////////////////////////////////////////
@@ -667,8 +667,12 @@ public class GUI {
 					//Make fitness object
 					GeneticOperations g1 = new GeneticOperations(students,staff,timetable);
 					
+					
+					
 					//Call fitness function
 					fitness = g1.fitnessGrading(rows, columns);
+					
+					System.out.println("Out of fitness");
 					
 					//Add fitness to fitness array
 					fitnessArray[i] = fitness;
@@ -687,9 +691,28 @@ public class GUI {
 				System.out.println("Fitness array before proportional selection");
 				System.out.println(Arrays.toString(fitnessArray));
 				
+				double lowestFitness = 1000;
+				
 				//Generation Loop
 				for(i = 0; i < generationSize; i++)
 				{
+					
+					//Find lowest fitness
+					for(int x = 0; x < fitnessArray.length; x++)
+					{
+						if(fitnessArray[x] < lowestFitness)
+						{
+							lowestFitness = fitnessArray[x];
+						}
+					}
+					
+					//Move all fitnesses relative to lowest fitness being 0
+					for(int x = 0; x < fitnessArray.length; x++)
+					{
+						//System.out.println("Fitness Array x before: " + fitnessArray[x]);
+						fitnessArray[x] = fitnessArray[x] + (lowestFitness * (-1));
+						//System.out.println("Fitness Array x after: " + fitnessArray[x]);
+					} 
 					
 					//Create genetic operations object
 					GeneticOperations g1 = new GeneticOperations();
@@ -708,13 +731,13 @@ public class GUI {
 					}
 					
 					
-					//Call mutation
+					//Call mutation returning new population
 					
 					for (int x = 0; x < mutationRate; x++)
 					{
 						population = g1.twoPointSwapMutation(population, rows, columns);
 						//mutationCount++;
-						//System.out.println("Mutation Initiated");
+					 	//System.out.println("Mutation Initiated");
 					}
 					
 					
@@ -726,6 +749,9 @@ public class GUI {
 						//Grade fitness of individual timetable
 						fitness = g2.fitnessGrading(rows, columns);
 						
+						//Add this timetables fitness to the fitness array (OVERWRITING)
+						fitnessArray[j] = fitness;
+						
 						//Check for best fitness (OVERALL)
 						if(fitness > bestFitness)
 						{
@@ -735,11 +761,11 @@ public class GUI {
 							bestTimetable = population.get(j);
 						}
 						
-						//Add this timetables fitness to the fitness array (OVERWRITING)
-						fitnessArray[j] = fitness;
+						
 						totalFitness = totalFitness + fitness;
 					}
 					
+					//Calculate average fitness
 					averageFitness = totalFitness / populationSize;
 					
 					//if (i % 100 == 0)
@@ -747,7 +773,7 @@ public class GUI {
 						//System.out.println("Generation: " + (i) + " // Fitness: " + (averageFitness - 500));
 					//}
 						
-					averageFitnessArray[i] = averageFitness - 1500;
+					averageFitnessArray[i] = averageFitness;
 					totalFitness = 0;
 					
 					//If we're on the first generation, add some info into arraylist to send to GUI
@@ -755,15 +781,15 @@ public class GUI {
 					{
 						//Add gen number to new update
 						newUpdate.add((double)i);
-						newUpdate.add(averageFitness - 1500);
-						newUpdate.add(bestFitness - 1500);
+						newUpdate.add(averageFitness);
+						newUpdate.add(bestFitness);
 						newUpdate.add((double)generationSize);
 					}
 					else //Else replace the already created objects in the arraylist -> so I can keep the same index's 
 					{
 						newUpdate.set(0, (double)i);
-						newUpdate.set(1, averageFitness - 1500);
-						newUpdate.set(2, bestFitness - 1500);
+						newUpdate.set(1, averageFitness);
+						newUpdate.set(2, bestFitness);
 					}
 					
 					publish(newUpdate);
@@ -775,9 +801,6 @@ public class GUI {
 						break;
 					}
 					
-					
-					//crossOverRate = crossOverRate - 0.0001;
-					//mutationRate = mutationRate + 0.0001;
 					
 				}
 				
@@ -818,7 +841,7 @@ public class GUI {
 				
 				//Print timetable
 				System.out.println(Arrays.deepToString(translatedTimetable));
-				System.out.println("Best Fitness: " + (bestFitness - 1500));
+				System.out.println("Best Fitness: " + (bestFitness));
 				
 				//Print how many rows were correct in best timetable
 				System.out.println("Correct row count: " + correctRows);

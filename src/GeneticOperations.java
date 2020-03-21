@@ -59,11 +59,11 @@ public class GeneticOperations {
 							//If student has correct second reader increment fitness
 							if(timetable[i][j+2] == student.getSecondReaderID())
 							{
-								fitness = fitness + 1.5;
+								fitness = fitness + 3;
 							}
 							else //Else decrement
 							{
-								fitness = fitness - 1.5;
+								fitness = fitness - 3;
 							}
 							//END SECOND READER CHECK
 							
@@ -88,7 +88,7 @@ public class GeneticOperations {
 					//If loop is exited without a match, entity is not student so decrement fitness
 					if(counter == 0)	//Counter here should be either 0 or 1 (NO OTHER VALUE)
 					{
-						fitness = fitness - 3;
+						fitness = fitness - 7;
 					}
 					
 					//Reset counter
@@ -134,7 +134,7 @@ public class GeneticOperations {
 					//If loop is exited without a match, entity is not a staff member so decrement fitness
 					if(counter == 0)	//Counter here should be either 0 or 1 (NO OTHER VALUE)
 					{
-						fitness = fitness - 3;
+						fitness = fitness - 2;
 					}
 					
 					//Reset counter
@@ -171,7 +171,7 @@ public class GeneticOperations {
 					//If loop is exited without a match, entity is not a staff member so decrement fitness
 					if(counter == 0)	//Counter here should be either 0 or 1 (NO OTHER VALUE)
 					{
-						fitness = fitness - 3;
+						fitness = fitness - 1;
 					}
 					
 					//Reset counter
@@ -223,7 +223,7 @@ public class GeneticOperations {
 			}
 		}
 		
-		fitness = fitness + 1500; //Make positive
+		//fitness = fitness + 1500; //Make positive
 		return fitness;
 	}
 	

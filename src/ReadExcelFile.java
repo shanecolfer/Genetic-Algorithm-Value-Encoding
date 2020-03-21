@@ -109,7 +109,7 @@ public class ReadExcelFile {
 		r1 = s1.getRow(3);
 		c1 = r1.getCell(2);
 		
-		for(i = 3; i < 139; i++)		//TODO THIS IS HARD CODED TO 2020 EXCEL SHEET
+		for(i = 3; i < 53; i++)		//TODO THIS IS HARD CODED TO 2020 EXCEL SHEET
 		{
 			r1 = s1.getRow(i);
 			c1 = r1.getCell(1);
@@ -168,7 +168,7 @@ public class ReadExcelFile {
 		String currentName;
 		
 		//Read from staff list not insterting duplicates
-		for(i = 3; i < 139; i++)		//TODO This needs to be fixed, the number of cells in this row is HARD CODED
+		for(i = 3; i < 53; i++)		//TODO This needs to be fixed, the number of cells in this row is HARD CODED
 		{
 			r1 = s1.getRow(i);
 			c1 = r1.getCell(1);
@@ -190,7 +190,7 @@ public class ReadExcelFile {
 		}
 		
 		//Read from supervisor list inserting any that weren't on staff list
-		for(i = 3; i < 139; i++)
+		for(i = 3; i < 53; i++)
 		{
 			r1 = s1.getRow(i);
 			c1 = r1.getCell(2);
