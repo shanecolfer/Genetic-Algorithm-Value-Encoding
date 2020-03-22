@@ -273,6 +273,7 @@ public class ReadExcelFile {
 	
 	}
 	
+	//Fancy timetable printer (Splits timetable up dependant on given days and rooms)
 	public void printTimetableBetter(String[][] timetable, double[] averageFitnessArray) throws IOException
 	{
 		
@@ -312,7 +313,7 @@ public class ReadExcelFile {
 		int rows = 0;
 		int cols = 0;
 		int roomCount = 0;
-		int noOfRooms = 2;
+		int noOfRooms = 3;
 		int noOfTimeslots = 8;
 		int noOfTimeslotsTemp = noOfTimeslots;
 		

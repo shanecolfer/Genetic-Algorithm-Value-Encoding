@@ -189,15 +189,15 @@ public class GUI {
 		generationSizeBox.setBounds(126, 19, 76, 21);
 		
 		populationSizeBox = new Text(grpInputParameters, SWT.BORDER);
-		populationSizeBox.setText("1000");
+		populationSizeBox.setText("3800");
 		populationSizeBox.setBounds(126, 46, 76, 21);
 		
 		crossOverRateBox = new Text(grpInputParameters, SWT.BORDER);
-		crossOverRateBox.setText("0.9");
+		crossOverRateBox.setText("0.95");
 		crossOverRateBox.setBounds(126, 100, 76, 21);
 		
 		mutationRateBox = new Text(grpInputParameters, SWT.BORDER);
-		mutationRateBox.setText("0.005");
+		mutationRateBox.setText("0.04");
 		mutationRateBox.setBounds(126, 73, 76, 21);
 		
 		Button revertDefault = new Button(grpInputParameters, SWT.NONE);
