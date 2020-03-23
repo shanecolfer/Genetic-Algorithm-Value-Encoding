@@ -24,6 +24,7 @@ public class ReadExcelFile {
 	private int noOfDays;
 	private int noOfTimeslots;
 	
+	
 	public int getNoOfRooms() {
 		return noOfRooms;
 	}
@@ -70,7 +71,7 @@ public class ReadExcelFile {
 		this.outputDirectory = outputDirectory;
 	}
 
-	public ArrayList<Student> readStudents() throws IOException
+	public ArrayList<Student> readStudents(int noOfStudents) throws IOException
 	{
 		
 		ArrayList<Student> students = new ArrayList<>();
@@ -109,7 +110,7 @@ public class ReadExcelFile {
 		r1 = s1.getRow(3);
 		c1 = r1.getCell(2);
 		
-		for(i = 3; i < 53; i++)		//TODO THIS IS HARD CODED TO 2020 EXCEL SHEET
+		for(i = 3; i < noOfStudents + 3; i++)		//TODO THIS IS HARD CODED TO 2020 EXCEL SHEET
 		{
 			r1 = s1.getRow(i);
 			c1 = r1.getCell(1);
@@ -127,7 +128,7 @@ public class ReadExcelFile {
 		return students;
 	}
 	
-	public ArrayList<Staff> readStaff() throws IOException
+	public ArrayList<Staff> readStaff(int noOfStudents) throws IOException
 	{
 		ArrayList <String> staffNames = new ArrayList<>();
 		
@@ -168,7 +169,7 @@ public class ReadExcelFile {
 		String currentName;
 		
 		//Read from staff list not insterting duplicates
-		for(i = 3; i < 53; i++)		//TODO This needs to be fixed, the number of cells in this row is HARD CODED
+		for(i = 3; i < noOfStudents + 3; i++)		//TODO This needs to be fixed, the number of cells in this row is HARD CODED
 		{
 			r1 = s1.getRow(i);
 			c1 = r1.getCell(1);
@@ -190,7 +191,7 @@ public class ReadExcelFile {
 		}
 		
 		//Read from supervisor list inserting any that weren't on staff list
-		for(i = 3; i < 53; i++)
+		for(i = 3; i < noOfStudents + 3; i++)
 		{
 			r1 = s1.getRow(i);
 			c1 = r1.getCell(2);

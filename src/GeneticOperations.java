@@ -201,19 +201,31 @@ public class GeneticOperations {
 						//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots)][0] == timetable[i][j]) 
 						{
-							fitness = fitness - 3;
+							fitness = fitness - 7;
+						}
+						else
+						{
+							fitness = fitness + 0.5;
 						}
 						
 						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots)][1] == timetable[i][j]) 
 						{
-							fitness = fitness - 3;
+							fitness = fitness - 7;
+						}
+						else
+						{
+							fitness = fitness + 0.5;
 						}
 						
 						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots)][2] == timetable[i][j]) 
 						{
-							fitness = fitness - 3;
+							fitness = fitness - 7;
+						}
+						else
+						{
+							fitness = fitness + 0.5;
 						}
 					}
 					else //We're on a room in the middle of two rooms we can look left and right
@@ -222,19 +234,31 @@ public class GeneticOperations {
 						//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots)][0] == timetable[i][j]) 
 						{
-							fitness = fitness - 3;
+							fitness = fitness - 7;
+						}
+						else
+						{
+							fitness = fitness + 0.5;
 						}
 						
 						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots)][1] == timetable[i][j]) 
 						{
-							fitness = fitness - 3;
+							fitness = fitness - 7;
+						}
+						else
+						{
+							fitness = fitness + 0.5;
 						}
 
 						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots)][2] == timetable[i][j]) 
 						{
-							fitness = fitness - 3;
+							fitness = fitness - 7;
+						}
+						else
+						{
+							fitness = fitness + 0.5;
 						}
 
 						
@@ -246,20 +270,32 @@ public class GeneticOperations {
 							//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
 							if(timetable[(i) + (noOfTimeslots)][0] == timetable[i][j]) 
 							{
-								fitness = fitness - 3;
+								fitness = fitness - 7;
+							}
+							else
+							{
+								fitness = fitness + 0.5;
 							}
 
 							//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
 							if(timetable[(i) + (noOfTimeslots)][1] == timetable[i][j]) 
 							{
-								fitness = fitness - 3;
+								fitness = fitness - 7;
+							}
+							else
+							{
+								fitness = fitness + 0.5;
 							}
 
 							
 							//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
 							if(timetable[(i) + (noOfTimeslots)][2] == timetable[i][j]) 
 							{
-								fitness = fitness - 3;
+								fitness = fitness - 7;
+							}
+							else
+							{
+								fitness = fitness + 0.5;
 							}
 						}
 
