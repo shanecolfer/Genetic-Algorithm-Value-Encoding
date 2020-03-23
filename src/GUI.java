@@ -55,7 +55,7 @@ public class GUI {
 	//Timetable parameters
 	private int noOfRoomsInt;
 	private int noOfTimeslotsInt;
-	private int noOfDaysInt;
+	private int noOfStudentsInt;
 	
 	//Genetic Algorithm file input and output variables
 	private String inputFile;
@@ -65,7 +65,7 @@ public class GUI {
 	private ProgressBar progressBar;
 	
 	private Boolean cancelGA = false;
-	private Text noOfDays;
+	private Text noOfStudents;
 	private Text noOfTimeslots;
 	private Text noOfRooms;
 	
@@ -118,13 +118,15 @@ public class GUI {
 	public void setNoOfTimeslotsInt(int noOfTimeslotsInt) {
 		this.noOfTimeslotsInt = noOfTimeslotsInt;
 	}
+	
+	
 
-	public int getNoOfDaysInt() {
-		return noOfDaysInt;
+	public int getNoOfStudentsInt() {
+		return noOfStudentsInt;
 	}
 
-	public void setNoOfDaysInt(int noOfDaysInt) {
-		this.noOfDaysInt = noOfDaysInt;
+	public void setNoOfStudentsInt(int noOfStudentsInt) {
+		this.noOfStudentsInt = noOfStudentsInt;
 	}
 
 	/**
@@ -298,7 +300,8 @@ public class GUI {
 				
 				//Read in timetable parameters
 				noOfRoomsInt = Integer.parseInt(noOfRooms.getText());
-				noOfDaysInt = Integer.parseInt(noOfDays.getText());
+				noOfRoomsInt = noOfRoomsInt - 1;
+				noOfStudentsInt = Integer.parseInt(noOfStudents.getText());
 				noOfTimeslotsInt = Integer.parseInt(noOfTimeslots.getText());
 				
 				//Read in file data
@@ -343,8 +346,8 @@ public class GUI {
 		grpTimetableInformation.setBounds(10, 180, 230, 170);
 		
 		Label lblNewLabel_1 = new Label(grpTimetableInformation, SWT.NONE);
-		lblNewLabel_1.setBounds(10, 17, 69, 15);
-		lblNewLabel_1.setText("No. of Days");
+		lblNewLabel_1.setBounds(10, 17, 97, 15);
+		lblNewLabel_1.setText("No. of Students");
 		
 		Label lblNewLabel_2 = new Label(grpTimetableInformation, SWT.NONE);
 		lblNewLabel_2.setBounds(10, 44, 97, 15);
@@ -354,8 +357,8 @@ public class GUI {
 		lblNoOfRooms.setBounds(10, 71, 80, 15);
 		lblNoOfRooms.setText("No. of Rooms");
 		
-		noOfDays = new Text(grpTimetableInformation, SWT.BORDER);
-		noOfDays.setBounds(126, 14, 76, 21);
+		noOfStudents = new Text(grpTimetableInformation, SWT.BORDER);
+		noOfStudents.setBounds(126, 14, 76, 21);
 		
 		noOfTimeslots = new Text(grpTimetableInformation, SWT.BORDER);
 		noOfTimeslots.setBounds(126, 41, 76, 21);
@@ -421,7 +424,7 @@ public class GUI {
 				//Rows and Column variables
 				//These get passed to various table making functions
 				//They denote the size of the timetable (x*y)
-				int rows = noOfTimeslotsInt * noOfDaysInt; //Hangs after 78 //Multiply number of days * number of timeslots per day to get full timetable size
+				int rows = noOfStudentsInt; //Hangs after 78 //Multiply number of days * number of timeslots per day to get full timetable size
 				int columns = 3;
 				
 				int mutationCount = 0;
@@ -667,10 +670,8 @@ public class GUI {
 					//Make fitness object
 					GeneticOperations g1 = new GeneticOperations(students,staff,timetable);
 					
-					
-					
 					//Call fitness function
-					fitness = g1.fitnessGrading(rows, columns);
+					fitness = g1.fitnessGrading(rows, columns, noOfRoomsInt, noOfTimeslotsInt);
 					
 					System.out.println("Out of fitness");
 					
@@ -747,7 +748,7 @@ public class GUI {
 						//Create new object for each loop with each timetable in population
 						GeneticOperations g2 = new GeneticOperations(students,staff,population.get(j));
 						//Grade fitness of individual timetable
-						fitness = g2.fitnessGrading(rows, columns);
+						fitness = g2.fitnessGrading(rows, columns, noOfRoomsInt, noOfTimeslotsInt);
 						
 						//Add this timetables fitness to the fitness array (OVERWRITING)
 						fitnessArray[j] = fitness;
@@ -850,7 +851,7 @@ public class GUI {
 				r1.printTimetable(translatedTimetable, averageFitnessArray);
 				
 				//Write timetable to file fancy
-				r1.printTimetableBetter(translatedTimetable, averageFitnessArray);
+				r1.printTimetableBetter(translatedTimetable, averageFitnessArray, noOfRoomsInt, noOfTimeslotsInt);
 				
 				//BEST FITNESS DOES NOT SEEM TO MATCH THE GIVEN BEST TIMETABLE?
 				//TEST THIS WITH A VERY SMALL POP SIZE AND GEN SIZE AND DEBUG, MAKE SURE THIS IS WORKING CORRECTLY!!!

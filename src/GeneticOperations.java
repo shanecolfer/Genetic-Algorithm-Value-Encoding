@@ -9,13 +9,18 @@ public class GeneticOperations {
 	
 	private int[][] timetable;										//Stores 2-D timetable made up of entity IDs.
 	
-	public double fitnessGrading(int rows, int columns)
+	public double fitnessGrading(int rows, int columns, int noOfRooms, int noOfTimeslots)
 	{
 		double fitness = 0;			//Store fitness
 		ArrayList<Integer> studentsGone = new ArrayList<>();		//Store students who have gone before
 		ArrayList<Integer> monitorsGone = new ArrayList<>();		//Store monitors who have gone before
 		
-		int counter = 0;										//Counter				
+		
+		int counter = 0;										//Counter			
+		int roomChecker = 0;
+		int currentRoom = 0;
+		int rowCounter = 0;
+		
 		
 		//Fitness Loop
 		for(int i = 0; i < rows; i++)
@@ -181,6 +186,110 @@ public class GeneticOperations {
 				//END SUPERVISOR CHECK
 				}
 				
+				//START ROOM CLASH CHECKING
+				
+				
+				
+				
+				
+				//If we're past the first room of the day do some checking
+				if(roomChecker > noOfTimeslots - 1)
+				{
+					
+					if(currentRoom == noOfRooms) //If we're on the last room don't check right
+					{
+						//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
+						if(timetable[(i) - (noOfTimeslots)][0] == timetable[i][j]) 
+						{
+							fitness = fitness - 3;
+						}
+						
+						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
+						if(timetable[(i) - (noOfTimeslots)][1] == timetable[i][j]) 
+						{
+							fitness = fitness - 3;
+						}
+						
+						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
+						if(timetable[(i) - (noOfTimeslots)][2] == timetable[i][j]) 
+						{
+							fitness = fitness - 3;
+						}
+					}
+					else //We're on a room in the middle of two rooms we can look left and right
+					{
+						//LOOK LEFT
+						//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
+						if(timetable[(i) - (noOfTimeslots)][0] == timetable[i][j]) 
+						{
+							fitness = fitness - 3;
+						}
+						
+						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
+						if(timetable[(i) - (noOfTimeslots)][1] == timetable[i][j]) 
+						{
+							fitness = fitness - 3;
+						}
+
+						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
+						if(timetable[(i) - (noOfTimeslots)][2] == timetable[i][j]) 
+						{
+							fitness = fitness - 3;
+						}
+
+						
+						//Make sure we're not checking an array element that doesn't exist causing an out of bounds
+						if((i) + (noOfTimeslots) < timetable.length)
+						{
+							/////////////////////////////
+							//LOOK RIGHT
+							//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
+							if(timetable[(i) + (noOfTimeslots)][0] == timetable[i][j]) 
+							{
+								fitness = fitness - 3;
+							}
+
+							//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
+							if(timetable[(i) + (noOfTimeslots)][1] == timetable[i][j]) 
+							{
+								fitness = fitness - 3;
+							}
+
+							
+							//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
+							if(timetable[(i) + (noOfTimeslots)][2] == timetable[i][j]) 
+							{
+								fitness = fitness - 3;
+							}
+						}
+
+					} 
+					
+					
+				}
+				
+				//If the row counter is == to timeslots I.E we're in a new room we want to increment the current room integer and make the 
+				// row counter 0 again
+				if(rowCounter == noOfTimeslots)
+				{
+					currentRoom++;
+					rowCounter = 0;
+				}
+				
+				//If we have reached the next day, we're on the first room so no need to check backwards
+				if(roomChecker == noOfTimeslots * noOfRooms)
+				{
+					roomChecker = 0;
+					currentRoom = 0;
+				}
+				
+							
+				
+				
+				
+				
+				//END ROOM CLASH CHECKING
+				
 				/*
 				else if(j==3)		//If we're on the 4th column, MONITOR CHECKS
 					
@@ -221,6 +330,9 @@ public class GeneticOperations {
 					
 				}*/
 			}
+			
+			roomChecker++;
+			rowCounter++;
 		}
 		
 		//fitness = fitness + 1500; //Make positive
