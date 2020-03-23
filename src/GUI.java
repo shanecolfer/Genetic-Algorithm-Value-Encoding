@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Text;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -913,6 +914,7 @@ public class GUI {
 						newUpdate.set(2, bestFitness);
 					}
 					
+					
 					publish(newUpdate);
 					
 					//If the cancel button has been pressed reset it and exit the generation loop
@@ -992,8 +994,14 @@ public class GUI {
 			{
 				ArrayList <Double>newUpdate = chunks.get(chunks.size() -1);
 				
+				//Create a decimal formatter to strip the end of average fitness for display
+				DecimalFormat noFormat = new DecimalFormat("#.0");
+				
+				//Create new string from average fitness with formatting
+				String fAverageFitness = noFormat.format(newUpdate.get(1));
+				
 				Display.getDefault().asyncExec(() -> currentGenLbl.setText(Double.toString(newUpdate.get(0))));
-				Display.getDefault().asyncExec(() -> avFitnessLbl.setText(Double.toString(newUpdate.get(1))));
+				Display.getDefault().asyncExec(() -> avFitnessLbl.setText(fAverageFitness));
 				Display.getDefault().asyncExec(() -> bstFitnessLbl.setText(Double.toString(newUpdate.get(2))));
 				
 				
