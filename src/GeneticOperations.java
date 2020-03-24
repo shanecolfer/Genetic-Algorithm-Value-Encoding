@@ -205,7 +205,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.5;
+							fitness = fitness + 0.1;
 						}
 						
 						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
@@ -215,7 +215,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.5;
+							fitness = fitness + 0.1;
 						}
 						
 						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
@@ -225,7 +225,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.5;
+							fitness = fitness + 0.1;
 						}
 					}
 					else //We're on a room in the middle of two rooms we can look left and right
@@ -238,7 +238,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.5;
+							fitness = fitness + 0.1;
 						}
 						
 						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
@@ -248,7 +248,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.5;
+							fitness = fitness + 0.1;
 						}
 
 						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
@@ -258,7 +258,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.5;
+							fitness = fitness + 0.1;
 						}
 
 						
@@ -274,7 +274,7 @@ public class GeneticOperations {
 							}
 							else
 							{
-								fitness = fitness + 0.5;
+								fitness = fitness + 0.1;
 							}
 
 							//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
@@ -284,7 +284,7 @@ public class GeneticOperations {
 							}
 							else
 							{
-								fitness = fitness + 0.5;
+								fitness = fitness + 0.1;
 							}
 
 							
@@ -295,7 +295,7 @@ public class GeneticOperations {
 							}
 							else
 							{
-								fitness = fitness + 0.5;
+								fitness = fitness + 0.1;
 							}
 						}
 

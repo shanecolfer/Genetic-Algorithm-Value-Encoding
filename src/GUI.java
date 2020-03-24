@@ -1000,9 +1000,12 @@ public class GUI {
 				//Create new string from average fitness with formatting
 				String fAverageFitness = noFormat.format(newUpdate.get(1));
 				
+				//Create new string from best fitness with formatting
+				String fBestFitness = noFormat.format(newUpdate.get(2));
+				
 				Display.getDefault().asyncExec(() -> currentGenLbl.setText(Double.toString(newUpdate.get(0))));
 				Display.getDefault().asyncExec(() -> avFitnessLbl.setText(fAverageFitness));
-				Display.getDefault().asyncExec(() -> bstFitnessLbl.setText(Double.toString(newUpdate.get(2))));
+				Display.getDefault().asyncExec(() -> bstFitnessLbl.setText(fBestFitness));
 				
 				
 				

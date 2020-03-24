@@ -246,6 +246,8 @@ public class ReadExcelFile {
 			}
 		}
 		
+		//If you want to print average fitness array
+		/*
 		Row row1 = sheet.createRow(timetable.length + 1);
 		
 		for(i = 0; i < averageFitnessArray.length; i++)
@@ -253,7 +255,7 @@ public class ReadExcelFile {
 			Cell cell = row1.createCell(i);
 			
 			cell.setCellValue(averageFitnessArray[i]);
-		}
+		}*/
 		
 		//Source: https://howtodoinjava.com/library/readingwriting-excel-files-in-java-poi-tutorial/
 		try
@@ -372,23 +374,24 @@ public class ReadExcelFile {
 			}
 		}
 		
-		Row row1 = sheet.createRow(fancyTimetable.length + 1);
+		//If you want to print average fitness array
+		/*Row row1 = sheet.createRow(fancyTimetable.length + 1);
 		
 		for(i = 0; i < averageFitnessArray.length; i++)
 		{
 			Cell cell = row1.createCell(i);
 			
 			cell.setCellValue(averageFitnessArray[i]);
-		}
+		}*/
 		
 		//Source: https://howtodoinjava.com/library/readingwriting-excel-files-in-java-poi-tutorial/
 		try
         {
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File(outputDirectory + "\\GAoutputBetter.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File(outputDirectory + "\\GAoutputFancy.xlsx"));
             workbook.write(out);
             out.close();
-            System.out.println("Timetable written successfully on disk.");
+            System.out.println("Fancy timetable written successfully on disk.");
         } 
         catch (Exception e) 
         {
