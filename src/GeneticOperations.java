@@ -467,6 +467,10 @@ public class GeneticOperations {
 		parent1 = population.get(randParent1);
 		parent2 = population.get(randParent2);
 		
+		//Print parents for debug
+		//System.out.println(Arrays.deepToString(parent1));
+		//System.out.println(Arrays.deepToString(parent2));
+		
 		//Temp variables for parents
 		int[][] tempP1 = parent1;
 		int[][] tempP2 = parent2;
@@ -508,6 +512,7 @@ public class GeneticOperations {
 		newPopulation.set(randParent1, child1);
 		newPopulation.set(randParent2, child2);
 		
+		//Print children for debug
 		//System.out.println(Arrays.deepToString(newPopulation.get(randParent1)));
 		//System.out.println(Arrays.deepToString(newPopulation.get(randParent2)));
 		
@@ -535,6 +540,8 @@ public class GeneticOperations {
 		
 		//Generate random timetable index from population to be mutated
 		int randTimetableIndex = (int) (Math.random() * (population.size())) + 0;
+		
+		//System.out.println(randTimetableIndex);
 		
 		//Generate rand row between 0 and number of rows to be first swap point
 		int randRow1 = (int) (Math.random() * (rows)) + 0;
