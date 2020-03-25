@@ -22,11 +22,13 @@ public class GeneticOperations {
 		int rowCounter = 0;
 		
 		
+		
 		//Fitness Loop
 		for(int i = 0; i < rows; i++)
 		{
 			for(int j = 0; j < columns; j++)
 			{
+				
 				//If we're on the first column (STUDENT CHECKING)
 				if(j==0)
 				{
@@ -195,114 +197,41 @@ public class GeneticOperations {
 				//If we're past the first room of the day do some checking
 				if(roomChecker > noOfTimeslots - 1)
 				{
-					
-					if(currentRoom == noOfRooms) //If we're on the last room don't check right
+					for(int y = 1; y < currentRoom + 1; y++)
 					{
 						//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
-						if(timetable[(i) - (noOfTimeslots)][0] == timetable[i][j]) 
+						if(timetable[(i) - (noOfTimeslots * y)][0] == timetable[i][j]) 
 						{
-							fitness = fitness - 7;
+							fitness = fitness - 5;
 						}
 						else
 						{
-							fitness = fitness + 0.1;
+							fitness = fitness + 0.05;
 						}
 						
 						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
-						if(timetable[(i) - (noOfTimeslots)][1] == timetable[i][j]) 
+						if(timetable[(i) - (noOfTimeslots * y)][1] == timetable[i][j]) 
 						{
-							fitness = fitness - 7;
+							fitness = fitness - 5;
 						}
 						else
 						{
-							fitness = fitness + 0.1;
+							fitness = fitness + 0.05;
 						}
 						
 						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
-						if(timetable[(i) - (noOfTimeslots)][2] == timetable[i][j]) 
+						if(timetable[(i) - (noOfTimeslots * y)][2] == timetable[i][j]) 
 						{
-							fitness = fitness - 7;
+							fitness = fitness - 5;
 						}
 						else
 						{
-							fitness = fitness + 0.1;
+							fitness = fitness + 0.05;
 						}
 					}
-					else //We're on a room in the middle of two rooms we can look left and right
-					{
-						//LOOK LEFT
-						//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
-						if(timetable[(i) - (noOfTimeslots)][0] == timetable[i][j]) 
-						{
-							fitness = fitness - 7;
-						}
-						else
-						{
-							fitness = fitness + 0.1;
-						}
-						
-						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
-						if(timetable[(i) - (noOfTimeslots)][1] == timetable[i][j]) 
-						{
-							fitness = fitness - 7;
-						}
-						else
-						{
-							fitness = fitness + 0.1;
-						}
-
-						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
-						if(timetable[(i) - (noOfTimeslots)][2] == timetable[i][j]) 
-						{
-							fitness = fitness - 7;
-						}
-						else
-						{
-							fitness = fitness + 0.1;
-						}
-
-						
-						//Make sure we're not checking an array element that doesn't exist causing an out of bounds
-						if((i) + (noOfTimeslots) < timetable.length)
-						{
-							/////////////////////////////
-							//LOOK RIGHT
-							//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
-							if(timetable[(i) + (noOfTimeslots)][0] == timetable[i][j]) 
-							{
-								fitness = fitness - 7;
-							}
-							else
-							{
-								fitness = fitness + 0.1;
-							}
-
-							//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
-							if(timetable[(i) + (noOfTimeslots)][1] == timetable[i][j]) 
-							{
-								fitness = fitness - 7;
-							}
-							else
-							{
-								fitness = fitness + 0.1;
-							}
-
-							
-							//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
-							if(timetable[(i) + (noOfTimeslots)][2] == timetable[i][j]) 
-							{
-								fitness = fitness - 7;
-							}
-							else
-							{
-								fitness = fitness + 0.1;
-							}
-						}
-
-					} 
-					
-					
 				}
+					
+					
 				
 				//If the row counter is == to timeslots I.E we're in a new room we want to increment the current room integer and make the 
 				// row counter 0 again
