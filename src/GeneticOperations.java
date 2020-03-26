@@ -28,6 +28,7 @@ public class GeneticOperations {
 		{
 			for(int j = 0; j < columns; j++)
 			{
+			
 				
 				//If we're on the first column (STUDENT CHECKING)
 				if(j==0)
@@ -206,7 +207,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.05;
+							fitness = fitness + 0.1;
 						}
 						
 						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
@@ -216,7 +217,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.05;
+							fitness = fitness + 0.1;
 						}
 						
 						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
@@ -226,7 +227,7 @@ public class GeneticOperations {
 						}
 						else
 						{
-							fitness = fitness + 0.05;
+							fitness = fitness + 0.1;
 						}
 					}
 				}

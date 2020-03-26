@@ -789,6 +789,14 @@ public class GUI {
 					//Add timetable to population
 					population.add(timetable);
 					
+					//Translate current timetable
+					//translatedTimetable = t1.translateTimetable(timetable,students,staff,rows,columns);
+					
+					//Print timetable
+					//System.out.println(Arrays.deepToString(translatedTimetable));
+					
+					//r1.printTimetableBetter(translatedTimetable, averageFitnessArray, noOfRoomsInt, noOfTimeslotsInt);
+					
 					//Grade timetable
 					//Make fitness object
 					GeneticOperations g1 = new GeneticOperations(students,staff,timetable);
@@ -799,11 +807,7 @@ public class GUI {
 					//Add fitness to fitness array
 					fitnessArray[i] = fitness;
 					
-					//Translate current timetable
-					//translatedTimetable = t1.translateTimetable(timetable,students,staff,rows,columns);
 					
-					//Print timetable
-					//System.out.println(Arrays.deepToString(translatedTimetable));
 					
 					//Print Fitness
 					//System.out.println(fitness);
