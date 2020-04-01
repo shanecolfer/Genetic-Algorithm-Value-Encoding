@@ -35,7 +35,7 @@ public class GeneticOperations {
 				{
 					//CORRECT POSITION CHECK
 					
-					//For each student in students check if bitstring is there i.e
+					//For each student in students check if bit string is there i.e
 					//entity is a student
 					for (Student student : students) 
 					{
@@ -47,20 +47,15 @@ public class GeneticOperations {
 							
 							//START SUPERVISOR CHECK
 							//If student has correct supervisor increment fitness
-							
-							//System.out.println(timetable[i][j+1] + student.getSupervisorID());
 							if(timetable[i][j+1] == student.getSupervisorID()) 
 							{
-								//System.out.println("Fitness before: " + fitness);
 								fitness = fitness + 3;
-								//System.out.println("Fitness after: " + fitness);
 								
 							}
 							else //Else decrement fitness
 							{
 								fitness = fitness - 3;
 							}
-							
 							//END SUPERVISOR CHECK
 							
 							//START SECOND READER CHECK
@@ -134,7 +129,7 @@ public class GeneticOperations {
 							//else
 							//{
 							//	fitness++;					//They are different entities
-						//	}
+							//}
 							
 						}
 					}
@@ -200,7 +195,7 @@ public class GeneticOperations {
 				{
 					for(int y = 1; y < currentRoom + 1; y++)
 					{
-						//If the entity 8 slots above in col 1(same time different room) is the same there is a clash
+						//If the entity 8 slots above in column 1(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots * y)][0] == timetable[i][j]) 
 						{
 							fitness = fitness - 5;
@@ -210,7 +205,7 @@ public class GeneticOperations {
 							fitness = fitness + 0.1;
 						}
 						
-						//If the entity 8 slots above in col 2(same time different room) is the same there is a clash
+						//If the entity 8 slots above in column 2(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots * y)][1] == timetable[i][j]) 
 						{
 							fitness = fitness - 5;
@@ -220,7 +215,7 @@ public class GeneticOperations {
 							fitness = fitness + 0.1;
 						}
 						
-						//If the entity 8 slots above in col 3(same time different room) is the same there is a clash
+						//If the entity 8 slots above in column 3(same time different room) is the same there is a clash
 						if(timetable[(i) - (noOfTimeslots * y)][2] == timetable[i][j]) 
 						{
 							fitness = fitness - 5;
@@ -369,7 +364,7 @@ public class GeneticOperations {
 		int randRow;
 		int randCol;
 		
-		//Random parent indexs
+		//Random parent index's
 		int randParent1;
 		int randParent2;
 		
@@ -382,26 +377,22 @@ public class GeneticOperations {
 		int[][] child2 = new int[rows][columns];
 		
 		
-		//Generate rand row between 0 and number of rows
+		//Generate random row between 0 and number of rows
 		randRow = (int) (Math.random() * (rows)) + 0;
 		
-		//Generate rand col between 0 and number of col
+		//Generate random column between 0 and number of column
 		randCol = (int) (Math.random() * (columns)) + 0;
 		
 		//Generate random timetable index from population to be parent 1
 		randParent1 = (int) (Math.random() * (population.size())) + 0;
-		//Generate random timetable index from populatuion to be parent 2
+		//Generate random timetable index from population to be parent 2
 		randParent2 = (int) (Math.random() * (population.size())) + 0;
 		
 		//Get parent timetables
 		parent1 = population.get(randParent1);
 		parent2 = population.get(randParent2);
 		
-		//Print parents for debug
-		//System.out.println(Arrays.deepToString(parent1));
-		//System.out.println(Arrays.deepToString(parent2));
-		
-		//Temp variables for parents
+		//Temporary variables for parents
 		int[][] tempP1 = parent1;
 		int[][] tempP2 = parent2;
 		
@@ -414,7 +405,7 @@ public class GeneticOperations {
 					child1[i][j] = tempP1[i][j];
 					
 					
-					//If we reach the crossover make the temp Parent1 variable Parent2 (Finishing off the rest of the crossover)
+					//If we reach the crossover make the temp Parent1 variable Parent2
 					if(i == randRow && j == randCol)
 					{
 						tempP1 = parent2;
@@ -431,7 +422,7 @@ public class GeneticOperations {
 					child2[i][j] = tempP2[i][j];
 					
 					
-					//If we reach the crossover make the temp Parent1 variable Parent2 (Finishing off the rest of the crossover)
+					//If we reach the crossover make the temp Parent1 variable Parent2
 					if(i == randRow && j == randCol)
 					{
 						tempP2 = parent1;
@@ -441,11 +432,6 @@ public class GeneticOperations {
 
 		newPopulation.set(randParent1, child1);
 		newPopulation.set(randParent2, child2);
-		
-		//Print children for debug
-		//System.out.println(Arrays.deepToString(newPopulation.get(randParent1)));
-		//System.out.println(Arrays.deepToString(newPopulation.get(randParent2)));
-		
 		
 		return newPopulation;
 	}
@@ -498,9 +484,6 @@ public class GeneticOperations {
 		
 		//Re insert into population
 		newPopulation.set(randTimetableIndex, selectedTimetable);
-		
-		//System.out.println("Swap point 1: " + randRow1 + " " + randCol1);
-		//System.out.println("Swap point 2: " + randRow2 + " " + randCol2);
 		
 		return newPopulation;
 		
