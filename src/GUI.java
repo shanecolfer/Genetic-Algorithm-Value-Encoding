@@ -1007,14 +1007,16 @@ public class GUI {
 				//Create new string from best fitness with formatting
 				String fBestFitness = noFormat.format(newUpdate.get(2));
 				
-				Display.getDefault().asyncExec(() -> currentGenLbl.setText(Double.toString(newUpdate.get(0))));
+				Display.getDefault().asyncExec(() -> currentGenLbl.setText(Double.toString(newUpdate.get(0) + 1)));
 				Display.getDefault().asyncExec(() -> avFitnessLbl.setText(fAverageFitness));
 				Display.getDefault().asyncExec(() -> bstFitnessLbl.setText(fBestFitness));
 				
 				
-				
+		
 				//TODO: Sort this out, it's the loading bar logic it's stupid
-				Display.getDefault().asyncExec(() -> progressBar.setSelection(progressBar.getSelection() + ((int)Math.round(newUpdate.get(3) / 100))));
+				Display.getDefault().asyncExec(() -> progressBar.setSelection(((int)Math.round(((newUpdate.get(0) + 1) / generationSize) * 100))));
+				Display.getDefault().asyncExec(() -> progressLbl.setText("Algorithm Running!"));
+				//System.out.println(((int)Math.round((newUpdate.get(0) / 1000) * 100)));
 			}
 
 
